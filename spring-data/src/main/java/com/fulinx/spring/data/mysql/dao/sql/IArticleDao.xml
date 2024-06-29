@@ -67,4 +67,16 @@
         AND is_delete = 0 FOR UPDATE
     </select>
 
+    <select id="listByCategoryId" resultMap="ArticleListResultMap">
+        SELECT DISTINCT a.*
+        FROM tb_article a
+                 LEFT JOIN tb_article_category_relation ac ON a.id = ac.article_id
+        WHERE ac.category_id = #{categoryId}
+          AND a.status = 1
+          AND a.is_delete = 0
+          AND ac.is_delete = 0
+        ORDER BY a.id desc
+        LIMIT 0,7;
+    </select>
+
 </mapper>

@@ -17,7 +17,7 @@ public class UserDetailDo implements Serializable {
 
     private static final long serialVersionUID = 3670541294069365380L;
 
-    @Parameter(name = "User Id")
+    @Parameter(name = "User ID")
     private Integer userId;
 
     @Schema(description = "First Name")

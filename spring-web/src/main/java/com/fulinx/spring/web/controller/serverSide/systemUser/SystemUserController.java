@@ -42,14 +42,14 @@ public class SystemUserController extends BaseServerSideController {
     /**
      * 新增用户
      *
-     * @param systemAdminUserCreateVo
+     * @param systemAdminServerSideUserCreateVo
      * @return
      * @throws BusinessException
      */
     @Operation(summary = "新增用户", method = "POST")
     @PostMapping
 //    @PreAuthorize("hasAnyAuthority('sys:users','sys:users:add')")
-    public ResultVo<Boolean> Create(@RequestBody @Valid SystemUserCreateVo systemAdminUserCreateVo) throws BusinessException {
+    public ResultVo<Boolean> Create(@RequestBody @Valid ServerSideUserCreateVo systemAdminServerSideUserCreateVo) throws BusinessException {
 //        Integer currentUserType = getSystemUserType();
 //        String username = systemAdminUserCreateVo.getUsername();
 //        String password = systemAdminUserCreateVo.getPassword();
@@ -66,14 +66,14 @@ public class SystemUserController extends BaseServerSideController {
     /**
      * 删除用户
      *
-     * @param systemAdminUserDeleteVo
+     * @param systemAdminServerSideUserDeleteVo
      * @return
      * @throws BusinessException
      */
     @Operation(summary = "删除用户", method = "Delete")
     @DeleteMapping
 //    @PreAuthorize("hasAnyAuthority('sys:users','sys:users:remove')")
-    public ResultVo<Boolean> Delete(@RequestBody @Valid SystemUserDeleteVo systemAdminUserDeleteVo) throws BusinessException {
+    public ResultVo<Boolean> Delete(@RequestBody @Valid ServerSideUserDeleteVo systemAdminServerSideUserDeleteVo) throws BusinessException {
 //        Integer currentUserType = getSystemUserType();
 //        Integer currentUserId = getSystemUserId();
 //        return ResultVo.build(iSystemUserService.remove(currentUserType, currentUserId, systemAdminUserDeleteVo.getIds()));
@@ -103,7 +103,7 @@ public class SystemUserController extends BaseServerSideController {
      * @return
      * @throws BusinessException
      */
-//    @ApiOperation(value = "获取用户基础信息", notes = "", httpMethod = "GET")
+//    @Operation(summary = "获取用户基础信息", method = "GET")
 //    @GetMapping()
 //    public ResultVo<ServerSideUserModel> Detail() throws BusinessException {
 //        return ResultVo.build(getServerSideUserModel());

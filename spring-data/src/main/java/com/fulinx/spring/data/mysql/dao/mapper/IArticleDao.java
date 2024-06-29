@@ -17,4 +17,6 @@ public interface IArticleDao {
     TbArticleEntity lockById(Serializable id);
 
     List<TbArticleEntity> lockByIds(Collection<? extends Serializable> idList);
+
+    List<ArticleListResultDo> listByCategoryId(Integer categoryId);
 }

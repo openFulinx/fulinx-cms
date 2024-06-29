@@ -5,7 +5,7 @@
 package com.fulinx.spring.core.generic;
 
 
-abstract public class AbstractController extends com.fulinx.spring.core.generic.AbstractGeneric {
+abstract public class AbstractController extends AbstractGeneric {
 
 
 }

@@ -21,7 +21,7 @@ import lombok.experimental.Accessors;
  * </p>
  *
  * @author fulinx
- * @since 2024-06-28
+ * @since 2024-06-29
  */
 @Getter
 @Setter
@@ -32,14 +32,14 @@ public class TbRolePermissionRelationEntity extends Model<TbRolePermissionRelati
 
     private static final long serialVersionUID = 1L;
 
-    @Schema(description = "Role Permission Id")
+    @Schema(description = "Role Permission ID")
     @TableId(value = "id", type = IdType.AUTO)
     private Integer id;
 
-    @Schema(description = "Role Id")
+    @Schema(description = "Role ID")
     private Integer roleId;
 
-    @Schema(description = "Permission Id")
+    @Schema(description = "Permission ID")
     private Integer permissionId;
 
     @Schema(description = "Soft Delete Flag")

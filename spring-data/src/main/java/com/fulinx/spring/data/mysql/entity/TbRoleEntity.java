@@ -21,7 +21,7 @@ import lombok.experimental.Accessors;
  * </p>
  *
  * @author fulinx
- * @since 2024-06-28
+ * @since 2024-06-29
  */
 @Getter
 @Setter
@@ -32,7 +32,7 @@ public class TbRoleEntity extends Model<TbRoleEntity> {
 
     private static final long serialVersionUID = 1L;
 
-    @Schema(description = "Role Id")
+    @Schema(description = "Role ID")
     @TableId(value = "id", type = IdType.AUTO)
     private Integer id;
 

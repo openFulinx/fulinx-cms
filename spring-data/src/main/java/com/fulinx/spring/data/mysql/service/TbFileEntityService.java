@@ -9,7 +9,7 @@ import com.baomidou.mybatisplus.extension.service.IService;
  * </p>
  *
  * @author fulinx
- * @since 2024-06-28
+ * @since 2024-06-29
  */
 public interface TbFileEntityService extends IService<TbFileEntity> {
 

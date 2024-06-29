@@ -21,7 +21,7 @@ public class UserListResultDo implements Serializable {
     @Serial
     private static final long serialVersionUID = 615235140817012220L;
 
-    @Schema(description = "User Id")
+    @Schema(description = "User ID")
     private Integer id;
 
     @Schema(name = "Telephone")

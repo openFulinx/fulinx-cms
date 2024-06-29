@@ -21,7 +21,7 @@ import lombok.experimental.Accessors;
  * </p>
  *
  * @author fulinx
- * @since 2024-06-28
+ * @since 2024-06-29
  */
 @Getter
 @Setter
@@ -32,12 +32,12 @@ public class TbArticleSeoEntity extends Model<TbArticleSeoEntity> {
 
     private static final long serialVersionUID = 1L;
 
-    @Schema(description = "Article Id")
+    @Schema(description = "Article ID")
     @TableId(value = "id", type = IdType.AUTO)
     private Integer id;
 
-    @Schema(description = "Blog Id")
-    private Integer blogId;
+    @Schema(description = "Article ID")
+    private Integer articleId;
 
     @Schema(description = "Meta Title")
     private String metaTitle;
@@ -74,7 +74,7 @@ public class TbArticleSeoEntity extends Model<TbArticleSeoEntity> {
 
     public static final String ID = "id";
 
-    public static final String BLOG_ID = "blog_id";
+    public static final String ARTICLE_ID = "article_id";
 
     public static final String META_TITLE = "meta_title";
 

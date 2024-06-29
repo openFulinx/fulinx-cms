@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+  ~ Copyright (c) Minong Tech. 2023.
+  -->
+
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.fulinx.spring.data.mysql.dao.mapper.ICategorySeoDao">
+
+    <!--通用查询映射结果-->
+    <resultMap id="BaseResultMap" type="com.fulinx.spring.data.mysql.entity.TbCategorySeoEntity">
+        <id column="id" property="id"/>
+        <result column="category_id" property="categoryId" />
+        <result column="meta_title" property="metaTitle" />
+        <result column="meta_keywords" property="metaKeywords" />
+        <result column="meta_description" property="metaDescription" />
+        <result column="is_delete" property="isDelete"/>
+        <result column="remark" property="remark"/>
+        <result column="record_version" property="recordVersion"/>
+        <result column="record_create_name" property="recordCreateName"/>
+        <result column="record_update_name" property="recordUpdateName"/>
+        <result column="record_create_time" property="recordCreateTime"/>
+        <result column="record_update_time" property="recordUpdateTime"/>
+    </resultMap>
+
+    <select id="lockByCategoryId" resultMap="BaseResultMap">
+        SELECT tb_category_seo.*
+        FROM tb_category_seo
+        WHERE category_id = #{categoryId}
+          AND is_delete = 0 FOR UPDATE
+    </select>
+
+</mapper>

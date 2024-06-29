@@ -21,7 +21,7 @@ import lombok.experimental.Accessors;
  * </p>
  *
  * @author fulinx
- * @since 2024-06-28
+ * @since 2024-06-29
  */
 @Getter
 @Setter
@@ -32,13 +32,16 @@ public class TbArticleEntity extends Model<TbArticleEntity> {
 
     private static final long serialVersionUID = 1L;
 
-    @Schema(description = "Article Id")
+    @Schema(description = "Article ID")
     @TableId(value = "id", type = IdType.AUTO)
     private Integer id;
 
     @Schema(description = "Soft Delete Flag")
     @TableLogic
     private Integer isDelete;
+
+    @Schema(description = "Status, 0 - Disabled , 1 - Enabled")
+    private Boolean status;
 
     @Schema(description = "Remark")
     private String remark;
@@ -66,6 +69,8 @@ public class TbArticleEntity extends Model<TbArticleEntity> {
     public static final String ID = "id";
 
     public static final String IS_DELETE = "is_delete";
+
+    public static final String STATUS = "status";
 
     public static final String REMARK = "remark";
 

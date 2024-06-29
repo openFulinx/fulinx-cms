@@ -21,7 +21,7 @@ public class RoleListResultDo implements Serializable {
     @Serial
     private static final long serialVersionUID = -7026957750457725266L;
 
-    @Schema(description = "Role Id")
+    @Schema(description = "Role ID")
     private Integer id;
 
     @Schema(description = "Role Name")

@@ -15,7 +15,7 @@ public class UserResultDo implements Serializable {
     @Serial
     private static final long serialVersionUID = 615235140817012220L;
 
-    @Parameter(name = "User Id")
+    @Parameter(name = "User ID")
     private Integer userId;
 
     @Schema(description = "Telephone")

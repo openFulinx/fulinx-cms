@@ -21,7 +21,7 @@ public class FileListResultDo implements Serializable {
     @Serial
     private static final long serialVersionUID = -7026957750457725266L;
 
-    @Schema(description = "File Id")
+    @Schema(description = "File ID")
     private Integer id;
 
     @Schema(description = "Original File Name")

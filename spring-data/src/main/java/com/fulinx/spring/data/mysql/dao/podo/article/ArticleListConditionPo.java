@@ -20,13 +20,13 @@ public class ArticleListConditionPo implements Serializable {
     @Serial
     private static final long serialVersionUID = -467672439017601372L;
 
-    @Schema(description = "Article Id")
-    private Integer id;
+    @Schema(description = "Article ID")
+    private Integer articleId;
 
     @Schema(description = "Article Name")
     private String articleName;
 
-    @Schema(description = "Category Id")
+    @Schema(description = "Category ID")
     private Integer categoryId;
 
     @Schema(description = "Soft Delete Flag")

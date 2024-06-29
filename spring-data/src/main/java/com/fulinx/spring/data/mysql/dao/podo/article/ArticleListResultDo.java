@@ -6,6 +6,8 @@ package com.fulinx.spring.data.mysql.dao.podo.article;
 
 import com.baomidou.mybatisplus.annotation.TableLogic;
 import com.baomidou.mybatisplus.annotation.Version;
+import com.fulinx.spring.data.mysql.entity.TbArticleTagEntity;
+import com.fulinx.spring.data.mysql.entity.TbFileEntity;
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
@@ -13,6 +15,7 @@ import lombok.EqualsAndHashCode;
 import java.io.Serial;
 import java.io.Serializable;
 import java.time.LocalDateTime;
+import java.util.List;
 
 @Data
 @EqualsAndHashCode(callSuper = false)
@@ -21,8 +24,23 @@ public class ArticleListResultDo implements Serializable {
     @Serial
     private static final long serialVersionUID = -7026957750457725266L;
 
-    @Schema(description = "Article Id")
+    @Schema(description = "Article ID")
     private Integer id;
+
+    @Schema(description = "Category Id")
+    private Integer categoryId;
+
+    @Schema(description = "Category Ids")
+    private List<List<Integer>> categoryIds;
+
+    @Schema(description = "Status, 0 - Disabled , 1 - Enabled")
+    private Boolean status;
+
+    @Schema(description = "File List")
+    private List<TbFileEntity> fileList;
+
+    @Schema(description = "Tags")
+    private List<TbArticleTagEntity> tags;
 
     @Schema(description = "Soft Delete Flag")
     @TableLogic

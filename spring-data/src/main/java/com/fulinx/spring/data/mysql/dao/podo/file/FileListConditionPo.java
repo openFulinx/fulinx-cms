@@ -20,7 +20,7 @@ public class FileListConditionPo implements Serializable {
     @Serial
     private static final long serialVersionUID = -467672439017601372L;
 
-    @Schema(description = "File Id")
+    @Schema(description = "File ID")
     private Integer id;
 
     @Schema(description = "Original File Name")

@@ -21,7 +21,7 @@ import lombok.experimental.Accessors;
  * </p>
  *
  * @author fulinx
- * @since 2024-06-28
+ * @since 2024-06-29
  */
 @Getter
 @Setter
@@ -32,14 +32,14 @@ public class TbArticleFileRelationEntity extends Model<TbArticleFileRelationEnti
 
     private static final long serialVersionUID = 1L;
 
-    @Schema(description = "Article Id")
+    @Schema(description = "Article ID")
     @TableId(value = "id", type = IdType.AUTO)
     private Integer id;
 
-    @Schema(description = "Blog Id")
-    private Integer blogId;
+    @Schema(description = "Article ID")
+    private Integer articleId;
 
-    @Schema(description = "File Id")
+    @Schema(description = "File ID")
     private Integer fileId;
 
     @Schema(description = "Is Main, 0 - No, 1 - Yes")
@@ -77,7 +77,7 @@ public class TbArticleFileRelationEntity extends Model<TbArticleFileRelationEnti
 
     public static final String ID = "id";
 
-    public static final String BLOG_ID = "blog_id";
+    public static final String ARTICLE_ID = "article_id";
 
     public static final String FILE_ID = "file_id";
 

@@ -1,0 +1,130 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+  ~ Copyright (c) Minong Tech. 2023.
+  -->
+
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.fulinx.spring.data.mysql.dao.mapper.ICategoryDao">
+
+    <!--通用查询映射结果-->
+    <resultMap id="BaseResultMap" type="com.fulinx.spring.data.mysql.entity.TbCategoryEntity">
+        <id column="id" property="id"/>
+        <result column="category_type" property="categoryType"/>
+        <result column="parent_id" property="parentId"/>
+        <result column="file_id" property="fileId"/>
+        <result column="link_url" property="linkUrl"/>
+        <result column="is_menu" property="isMenu"/>
+        <result column="is_home_category" property="isHomeCategory"/>
+        <result column="status" property="status"/>
+        <result column="is_delete" property="isDelete"/>
+        <result column="remark" property="remark"/>
+        <result column="record_version" property="recordVersion"/>
+        <result column="record_create_name" property="recordCreateName"/>
+        <result column="record_update_name" property="recordUpdateName"/>
+        <result column="record_create_time" property="recordCreateTime"/>
+        <result column="record_update_time" property="recordUpdateTime"/>
+    </resultMap>
+
+    <resultMap id="ListResultMap" type="com.fulinx.spring.data.mysql.dao.podo.category.CategoryListResultDo">
+        <id column="id" property="id"/>
+        <result column="parent_id" property="parentId"/>
+        <result column="file_id" property="fileId"/>
+        <result column="link_url" property="linkUrl"/>
+        <result column="category_type" property="categoryType"/>
+        <result column="category_name" property="categoryName"/>
+        <result column="category_description" property="categoryDescription"/>
+        <result column="meta_title" property="metaTitle"/>
+        <result column="meta_keywords" property="metaKeywords"/>
+        <result column="meta_description" property="metaDescription"/>
+        <result column="is_menu" property="isMenu"/>
+        <result column="is_home_category" property="isHomeCategory"/>
+        <result column="status" property="status"/>
+        <result column="is_delete" property="isDelete"/>
+        <result column="remark" property="remark"/>
+        <result column="record_version" property="recordVersion"/>
+        <result column="record_create_name" property="recordCreateName"/>
+        <result column="record_update_name" property="recordUpdateName"/>
+        <result column="record_create_time" property="recordCreateTime"/>
+        <result column="record_update_time" property="recordUpdateTime"/>
+    </resultMap>
+
+    <select id="list" resultMap="ListResultMap">
+        WITH RECURSIVE CategoryHierarchy AS (
+        SELECT
+        id,
+        parent_id
+        FROM
+        tb_category
+        <if test="id != null">
+            WHERE id = #{id}
+        </if>
+        UNION
+        SELECT
+        c.id,
+        c.parent_id
+        FROM
+        tb_category c
+        JOIN CategoryHierarchy ch ON c.parent_id = ch.id
+        )
+
+        SELECT
+        MIN(tb_category.id) AS id,
+        MIN(tb_category.parent_id) AS parent_id,
+        MIN(tb_category.file_id) AS file_id,
+        MIN(tb_category.link_url) AS link_url,
+        MIN(tb_category.category_type) AS category_type,
+        MIN(tb_category.status) AS status,
+        MIN(tb_category.is_menu) AS is_menu,
+        MIN(tb_category.is_home_category) AS is_home_category,
+        MIN(tb_category_description.category_name) AS category_name,
+        MIN(tb_category_description.category_description) AS category_description,
+        MIN(tb_category_seo.meta_title) AS meta_title,
+        MIN(tb_category_seo.meta_keywords) AS meta_keywords,
+        MIN(tb_category_seo.meta_description) AS meta_description
+        FROM
+        CategoryHierarchy
+        JOIN
+        tb_category ON CategoryHierarchy.id = tb_category.id
+        LEFT JOIN
+        tb_category_description ON tb_category_description.category_id = tb_category.id
+        LEFT JOIN
+        tb_category_seo ON tb_category_seo.category_id = tb_category.id
+        WHERE
+        1 = 1
+        <if test="categoryName != null">
+            AND tb_category_description.category_name LIKE CONCAT(#{categoryName}, '%')
+        </if>
+        <if test="categoryType != null">
+            AND tb_category.category_type = #{categoryType}
+        </if>
+        <if test="isMenu != null">
+            AND tb_category.is_menu = #{isMenu}
+        </if>
+        <if test="isHomeCategory != null">
+            AND tb_category.is_home_category = #{isHomeCategory}
+        </if>
+        <if test="status != null">
+            AND tb_category.status = ${status}
+        </if>
+        <choose>
+            <when test="isDelete == null">
+                AND tb_category.is_delete = 0
+            </when>
+            <otherwise>
+                AND tb_category.is_delete = #{isDelete}
+            </otherwise>
+        </choose>
+        GROUP BY
+        CategoryHierarchy.id
+    </select>
+
+
+    <select id="lockById" resultMap="BaseResultMap">
+        SELECT tb_category.*
+        FROM tb_category
+        WHERE id = #{id}
+          AND is_delete = 0 FOR
+        UPDATE
+    </select>
+
+</mapper>

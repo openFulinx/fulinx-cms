@@ -28,34 +28,63 @@ public enum ErrorMessageEnum {
     NOT_ALLOW_ADD_SUPERADMIN(-100011, "error.not.allow.add.superadmin"),
     NOT_ALLOW_UPDATE_SUPERADMIN(-100012, "error.not.allow.update.superadmin"),
     NOT_ALLOW_DELETE_SUPERADMIN(-100013, "error.not.allow.delete.superadmin"),
-    NOT_ALLOW_DELETE_SELF(-100013, "error.not.allow.delete.self"),
-    VERIFICATION_CODE_INCORRECT(-100014, "error.verification.code.incorrect"),
+    NOT_ALLOW_DELETE_SELF(-100014, "error.not.allow.delete.self"),
+    VERIFICATION_CODE_INCORRECT(-100015, "error.verification.code.incorrect"),
 
     /**
      * User Profile
      */
-    USER_ACCOUNT_DATA_CREATE_FAIL(-100049, "error.user.account.data.create.fail"),
-    USER_ARCHIVE_DATA_NOT_EXISTS(-100051, "error.user.archive.data.not.exists"),
-    USER_ARCHIVE_DATA_CREATE_FAIL(-100054, "error.user.archive.data.create.fail"),
+    USER_ACCOUNT_DATA_CREATE_FAIL(-100101, "error.user.account.data.create.fail"),
+    USER_ARCHIVE_DATA_NOT_EXISTS(-100102, "error.user.archive.data.not.exists"),
+    USER_ARCHIVE_DATA_CREATE_FAIL(-100103, "error.user.archive.data.create.fail"),
 
     /**
      * Role
      */
-    ROLE_CREATE_FAIL(-110001, "error.role.create.fail"),
-    ROLE_NAME_DUPLICATE(-110002, "error.role.name.duplicate"),
-    ROLE_PERMISSION_CANNOT_BE_EMPTY(-110003, "error.role.permission.cannot.be.empty"),
-    CANNOT_CREATE_SUPERADMIN(-110004, "error.cannot.create.superadmin"),
-    ROLE_NOT_EXISTS(-110005, "error.role.not.exists"),
-    ROLE_UPDATE_FAIL(-110006, "error.role.update.fail"),
-    ROLE_REFERENCED(-110007, "error.role.referenced"),
+    ROLE_CREATE_FAIL(-101002, "error.role.create.fail"),
+    ROLE_NAME_DUPLICATE(-101003, "error.role.name.duplicate"),
+    ROLE_PERMISSION_CANNOT_BE_EMPTY(-101004, "error.role.permission.cannot.be.empty"),
+    CANNOT_CREATE_SUPERADMIN(-101005, "error.cannot.create.superadmin"),
+    ROLE_NOT_EXISTS(-101006, "error.role.not.exists"),
+    ROLE_UPDATE_FAIL(-101007, "error.role.update.fail"),
+    ROLE_REFERENCED(-101008, "error.role.referenced"),
 
     /**
      * Permissions
      */
-    PERMISSION_CREATE_FAIL(-120001, "error.permission.create.fail"),
-    PERMISSION_IDENTIFIER_DUPLICATE(-120002, "error.permission.identifier.duplicate"),
-    PERMISSION_DATA_NOT_EXISTS(-120003, "error.permission.data.not.exists"),
-    CAPTCHA_BUSINESS_TYPE_INCORRECT(-120003, "error.captcha.business.type.incorrect"),
+    PERMISSION_CREATE_FAIL(-102001, "error.permission.create.fail"),
+    PERMISSION_IDENTIFIER_DUPLICATE(-102002, "error.permission.identifier.duplicate"),
+    PERMISSION_DATA_NOT_EXISTS(-102003, "error.permission.data.not.exists"),
+    CAPTCHA_BUSINESS_TYPE_INCORRECT(-102004, "error.captcha.business.type.incorrect"),
+
+    /**
+     * Article
+     */
+    ARTICLE_CREATE_FAIL(-102001, "error.article.create.fail"),
+    ARTICLE_UPDATE_FAIL(-102002, "error.article.update.fail"),
+    ARTICLE_NOT_EXISTS(-102003, "error.article.not.exists"),
+    ARTICLE_CATEGORY_NOT_EXISTS(-102004, "error.article.category.not.exists"),
+    ARTICLE_FILE_NOT_EXISTS(-102005, "error.article.file.not.exists"),
+    ARTICLE_STATUS_NOT_EXISTS(-102006, "error.article.status.not.exists"),
+    ARTICLE_TAG_NOT_EXISTS(-102007, "error.article.tag.not.exists"),
+
+
+    /**
+     * Category
+     */
+    CATEGORY_CREATE_FAIL(-103001, "error.category.create.fail"),
+    CATEGORY_UPDATE_FAIL(-103002, "error.category.update.fail"),
+    CATEGORY_NOT_EXISTS(-103003, "error.category.not.exists"),
+    CATEGORY_SEO_NOT_EXISTS(-103004, "error.category.seo.not.exists"),
+    CATEGORY_OF_PARENT_CAN_NOT_BE_IT_SELF(-103004, "error.category.of.parent.can.not.be.if.self"),
+
+    /**
+     * File
+     */
+    FILE_CREATE_FAIL(-104001, "error.file.create.fail"),
+    FILE_UPDATE_FAIL(-104002, "error.file.update.fail"),
+    FILE_NOT_EXISTS(-104003, "error.file.not.exists"),
+    FILE_UPLOAD_FAIL(-104004, "error.file.upload.fail"),
 
     /**
      * Other

@@ -21,7 +21,7 @@ import lombok.experimental.Accessors;
  * </p>
  *
  * @author fulinx
- * @since 2024-06-28
+ * @since 2024-06-29
  */
 @Getter
 @Setter
@@ -32,14 +32,14 @@ public class TbPermissionEntity extends Model<TbPermissionEntity> {
 
     private static final long serialVersionUID = 1L;
 
-    @Schema(description = "Permission Id")
+    @Schema(description = "Permission ID")
     @TableId(value = "id", type = IdType.AUTO)
     private Integer id;
 
-    @Schema(description = "Permission Unique Identifier")
+    @Schema(description = "Permission Unique IDentifier")
     private String permissionCode;
 
-    @Schema(description = "Permission Parent Id")
+    @Schema(description = "Permission Parent ID")
     private Integer permissionParentId;
 
     @Schema(description = "Permission Type: 1. Node 2. Branch")

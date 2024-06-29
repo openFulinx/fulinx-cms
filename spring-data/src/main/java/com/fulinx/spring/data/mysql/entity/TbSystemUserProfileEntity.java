@@ -21,7 +21,7 @@ import lombok.experimental.Accessors;
  * </p>
  *
  * @author fulinx
- * @since 2024-06-28
+ * @since 2024-06-29
  */
 @Getter
 @Setter
@@ -32,11 +32,11 @@ public class TbSystemUserProfileEntity extends Model<TbSystemUserProfileEntity> 
 
     private static final long serialVersionUID = 1L;
 
-    @Schema(description = "System User Profile Id")
+    @Schema(description = "System User Profile ID")
     @TableId(value = "id", type = IdType.AUTO)
     private Integer id;
 
-    @Schema(description = "User Id")
+    @Schema(description = "User ID")
     private Integer systemUserId;
 
     @Schema(description = "First Name")

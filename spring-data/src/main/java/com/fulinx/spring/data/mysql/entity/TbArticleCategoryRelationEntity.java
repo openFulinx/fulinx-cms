@@ -21,7 +21,7 @@ import lombok.experimental.Accessors;
  * </p>
  *
  * @author fulinx
- * @since 2024-06-28
+ * @since 2024-06-29
  */
 @Getter
 @Setter
@@ -32,14 +32,14 @@ public class TbArticleCategoryRelationEntity extends Model<TbArticleCategoryRela
 
     private static final long serialVersionUID = 1L;
 
-    @Schema(description = "Article Id")
+    @Schema(description = "Article ID")
     @TableId(value = "id", type = IdType.AUTO)
     private Integer id;
 
-    @Schema(description = "Blog Id")
-    private Integer blogId;
+    @Schema(description = "Article ID")
+    private Integer articleId;
 
-    @Schema(description = "Category Id")
+    @Schema(description = "Category ID")
     private Integer categoryId;
 
     @Schema(description = "Soft Delete Flag")
@@ -71,7 +71,7 @@ public class TbArticleCategoryRelationEntity extends Model<TbArticleCategoryRela
 
     public static final String ID = "id";
 
-    public static final String BLOG_ID = "blog_id";
+    public static final String ARTICLE_ID = "article_id";
 
     public static final String CATEGORY_ID = "category_id";
 

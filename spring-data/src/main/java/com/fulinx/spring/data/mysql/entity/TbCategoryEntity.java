@@ -21,7 +21,7 @@ import lombok.experimental.Accessors;
  * </p>
  *
  * @author fulinx
- * @since 2024-06-28
+ * @since 2024-06-29
  */
 @Getter
 @Setter
@@ -32,14 +32,14 @@ public class TbCategoryEntity extends Model<TbCategoryEntity> {
 
     private static final long serialVersionUID = 1L;
 
-    @Schema(description = "ID")
+    @Schema(description = "Category Detail ID")
     @TableId(value = "id", type = IdType.AUTO)
     private Integer id;
 
-    @Schema(description = "Parent Id")
+    @Schema(description = "Parent ID")
     private Integer parentId;
 
-    @Schema(description = "File Id")
+    @Schema(description = "File ID")
     private Integer fileId;
 
     @Schema(description = "Status, 0: Disabled 1: Enabled")

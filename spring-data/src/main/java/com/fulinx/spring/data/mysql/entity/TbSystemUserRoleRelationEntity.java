@@ -21,7 +21,7 @@ import lombok.experimental.Accessors;
  * </p>
  *
  * @author fulinx
- * @since 2024-06-28
+ * @since 2024-06-29
  */
 @Getter
 @Setter
@@ -32,14 +32,14 @@ public class TbSystemUserRoleRelationEntity extends Model<TbSystemUserRoleRelati
 
     private static final long serialVersionUID = 1L;
 
-    @Schema(description = "System User Role Id")
+    @Schema(description = "System User Role ID")
     @TableId(value = "id", type = IdType.AUTO)
     private Integer id;
 
-    @Schema(description = "System User Id")
+    @Schema(description = "System User ID")
     private Integer systemUserId;
 
-    @Schema(description = "角色ID")
+    @Schema(description = "Role ID")
     private Integer roleId;
 
     @Schema(description = "SOft Delete Flag")

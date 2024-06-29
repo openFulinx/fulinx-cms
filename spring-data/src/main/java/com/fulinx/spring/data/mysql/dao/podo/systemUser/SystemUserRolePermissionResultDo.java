@@ -30,7 +30,7 @@ public class SystemUserRolePermissionResultDo extends Model<TbPermissionEntity> 
     @Schema(description = "Permission Name")
     private String permissionName;
 
-    @Schema(description = "Permission Parent Id")
+    @Schema(description = "Permission Parent ID")
     private Integer permissionParentId;
 
     @Schema(description = "Permission Unique Identifier")

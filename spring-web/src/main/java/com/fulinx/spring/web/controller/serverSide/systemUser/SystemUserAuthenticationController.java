@@ -42,7 +42,7 @@ public class SystemUserAuthenticationController extends BaseServerSideController
      */
     @Operation(summary = "用户登录", method = "POST")
     @ApiOperationSupport(order = 1)
-//    @ApiResponse(description = "认证结果", responseCode = "200")
+//    @TagResponse(description = "认证结果", responseCode = "200")
     @PostMapping("/login")
     @CrossOrigin
     public ResultVo<SystemUserTokenDto> Login(@RequestBody @Validated SystemUserLoginVo systemAdminUserLoginVo) throws BusinessException {

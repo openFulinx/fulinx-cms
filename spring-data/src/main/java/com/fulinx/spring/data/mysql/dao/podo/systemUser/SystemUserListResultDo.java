@@ -21,7 +21,7 @@ public class SystemUserListResultDo implements Serializable {
     @Serial
     private static final long serialVersionUID = -3097863283384102285L;
 
-    @Schema(description = "System User Id")
+    @Schema(description = "System User ID")
     private Integer id;
 
     @Schema(name = "User Role Ids")

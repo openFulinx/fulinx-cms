@@ -16,7 +16,7 @@ import lombok.EqualsAndHashCode;
 @Schema(description = "管理员分页查询参数")
 public class SystemUserPaginationParameterVo extends BasePaginationParameterVo {
 
-    @Parameter(name = "主键ID")
+    @Parameter(name = "ID")
     private Integer id;
 
     @Parameter(name = "用户名")

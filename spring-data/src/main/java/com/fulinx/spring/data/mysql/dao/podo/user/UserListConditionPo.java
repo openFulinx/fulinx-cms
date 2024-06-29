@@ -18,7 +18,7 @@ public class UserListConditionPo implements Serializable {
     @Serial
     private static final long serialVersionUID = 2846304759613907925L;
 
-    @Schema(description = "User Id")
+    @Schema(description = "User ID")
     private Integer id;
 
     @Schema(description = "Telephone")

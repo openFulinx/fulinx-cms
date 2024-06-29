@@ -22,13 +22,13 @@ public class PermissionListResultDo implements Serializable {
     @Serial
     private static final long serialVersionUID = 341685551042266259L;
 
-    @Schema(description = "Permission Id")
+    @Schema(description = "Permission ID")
     private Integer id;
 
     @Schema(description = "Permission Name")
     private String permissionName;
 
-    @Schema(description = "Permission Parent Id")
+    @Schema(description = "Permission Parent ID")
     private Integer permissionParentId;
 
     @Schema(description = "Permission Unique Identifier")

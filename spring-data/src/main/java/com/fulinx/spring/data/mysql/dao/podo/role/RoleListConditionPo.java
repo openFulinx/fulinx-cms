@@ -19,7 +19,7 @@ public class RoleListConditionPo implements Serializable {
     @Serial
     private static final long serialVersionUID = -467672439017601372L;
 
-    @Schema(description = "Role Id")
+    @Schema(description = "Role ID")
     private Integer id;
 
     @Schema(description = "Role Name")
