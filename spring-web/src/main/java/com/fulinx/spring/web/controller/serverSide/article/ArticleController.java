@@ -33,7 +33,7 @@ import java.util.Optional;
 @Slf4j
 @Validated
 @RestController
-@RequestMapping("/system/articles")
+@RequestMapping("/server-side/article")
 public class ArticleController extends BaseServerSideController {
 
     private final IArticleService iArticleService;

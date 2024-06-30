@@ -32,7 +32,7 @@ import java.util.Optional;
 @RestController
 @Slf4j
 @Validated
-@RequestMapping("/system/categories")
+@RequestMapping("/server-side/category")
 public class CategoryController extends BaseServerSideController {
 
     private ICategoryService iCategoryService;
@@ -50,9 +50,9 @@ public class CategoryController extends BaseServerSideController {
      */
     @Operation(summary = "新增分类", method = "POST")
     @PostMapping
-    @PreAuthorize("hasAnyAuthority('sys:categories','sys:categories:add')")
+//    @PreAuthorize("hasAnyAuthority('sys:categories','sys:categories:add')")
     public ResultVo<Optional<CategoryListResultDto>> CreateCategory(@RequestBody @Valid CategoryCreateVo categoryCreateVo) throws BusinessException {
-        return ResultVo.build(iCategoryService.create(categoryCreateVo.getParentId(), categoryCreateVo.getCategoryName(), categoryCreateVo.getCategoryDescription(), categoryCreateVo.getMetaTitle(),  categoryCreateVo.getMetaDescription(), categoryCreateVo.getFileId(), categoryCreateVo.getStatus()));
+        return ResultVo.build(iCategoryService.create(categoryCreateVo.getParentId(), categoryCreateVo.getLanguageId(), categoryCreateVo.getCategoryName(), categoryCreateVo.getCategoryDescription(), categoryCreateVo.getMetaTitle(), categoryCreateVo.getMetaDescription(), categoryCreateVo.getFileId(), categoryCreateVo.getStatus()));
     }
 
     /**
@@ -64,7 +64,7 @@ public class CategoryController extends BaseServerSideController {
      */
     @Operation(summary = "删除分类", method = "DELETE")
     @DeleteMapping
-    @PreAuthorize("hasAnyAuthority('sys:categories','sys:categories:remove')")
+//    @PreAuthorize("hasAnyAuthority('sys:categories','sys:categories:remove')")
     public ResultVo<Boolean> RemoveCategory(@RequestBody CategoryDeleteVo categoryDeleteVo) throws BusinessException {
         return ResultVo.build(iCategoryService.remove(categoryDeleteVo.getIds()));
     }
@@ -79,9 +79,9 @@ public class CategoryController extends BaseServerSideController {
      */
     @Operation(summary = "更新分类", method = "PUT")
     @PutMapping("/{id}")
-    @PreAuthorize("hasAnyAuthority('sys:categories','sys:categories:update')")
+//    @PreAuthorize("hasAnyAuthority('sys:categories','sys:categories:update')")
     public ResultVo<Optional<CategoryListResultDto>> UpdateCategory(@PathVariable(value = "id") @Valid @NotNull @Min(1) Integer id, @RequestBody @Valid CategoryUpdateVo categoryUpdateVo) throws BusinessException {
-        return ResultVo.build(iCategoryService.update(id, categoryUpdateVo.getParentId(), categoryUpdateVo.getCategoryName(), categoryUpdateVo.getCategoryDescription(), categoryUpdateVo.getMetaTitle(), categoryUpdateVo.getMetaDescription(), categoryUpdateVo.getFileId(), categoryUpdateVo.getStatus()));
+        return ResultVo.build(iCategoryService.update(id, categoryUpdateVo.getParentId(), categoryUpdateVo.getLanguageId(), categoryUpdateVo.getCategoryName(), categoryUpdateVo.getCategoryDescription(), categoryUpdateVo.getMetaTitle(), categoryUpdateVo.getMetaDescription(), categoryUpdateVo.getFileId(), categoryUpdateVo.getStatus()));
     }
 
     /**
@@ -93,7 +93,7 @@ public class CategoryController extends BaseServerSideController {
      */
     @Operation(summary = "查看分类", method = "GET")
     @GetMapping("/{id}")
-    @PreAuthorize("hasAnyAuthority('sys:categories','sys:categories:show')")
+//    @PreAuthorize("hasAnyAuthority('sys:categories','sys:categories:show')")
     public ResultVo<Optional<CategoryListResultDto>> ShowCategory(@PathVariable(value = "id") @Valid @NonNull @Min(1) Integer id) throws BusinessException {
         return ResultVo.build(iCategoryService.getById(id));
     }
@@ -107,7 +107,7 @@ public class CategoryController extends BaseServerSideController {
      */
     @Operation(summary = "分类列表", method = "POST")
     @PostMapping("/pagination")
-    @PreAuthorize("hasAnyAuthority('sys:categories','sys:categories:pagination')")
+//    @PreAuthorize("hasAnyAuthority('sys:categories','sys:categories:pagination')")
     public ResultVo<ResultListVo<CategoryListResultDto>> Pagination(@RequestBody @Valid CategoryPaginationParameterVo categoryPaginationParameterVo) throws BusinessException {
         CategoryQueryConditionDto categoryQueryConditionDto = MiscUtils.copyProperties(categoryPaginationParameterVo, CategoryQueryConditionDto.class);
         IPage<CategoryListResultDto> categoryListResultDoIPage = iCategoryService.page(categoryQueryConditionDto, categoryPaginationParameterVo.getPageNumber(), categoryPaginationParameterVo.getPageSize());
@@ -122,7 +122,7 @@ public class CategoryController extends BaseServerSideController {
      */
     @Operation(summary = "分类列表 - 不带分页", method = "GET")
     @PostMapping("/list")
-    @PreAuthorize("hasAnyAuthority('sys:categories','sys:categories:list')")
+//    @PreAuthorize("hasAnyAuthority('sys:categories','sys:categories:list')")
     public ResultVo<ResultListVo<CategoryListResultDto>> List(@RequestBody(required = false) @Valid CategoryListVo categoryListVo) throws BusinessException {
         if (categoryListVo != null) {
             CategoryQueryConditionDto categoryQueryConditionDto = MiscUtils.copyProperties(categoryListVo, CategoryQueryConditionDto.class);

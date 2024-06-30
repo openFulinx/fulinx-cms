@@ -24,15 +24,6 @@ public class CategoryListConditionPo implements Serializable {
     @Schema(description = "分类名称")
     private String categoryName;
 
-    @Schema(description = "Category Type, 1: System Category, 2: Open Category")
-    private Integer categoryType;
-
-    @Schema(description = "是否为导航，0：不是，1：是")
-    private Boolean isMenu;
-
-    @Schema(description = "是否为首页分类")
-    private Boolean isHomeCategory;
-
     @Schema(description = "Status, 0: Disabled 1: Enabled")
     private Boolean status;
 

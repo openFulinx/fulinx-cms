@@ -21,7 +21,7 @@ public interface ICategorySeoService {
      * @return
      * @throws BusinessException
      */
-    Optional<TbCategorySeoEntity> create(Integer categoryId, String metaTitle, String metaDescription) throws BusinessException;
+    Optional<TbCategorySeoEntity> create(Integer categoryId, Integer languageId, String metaTitle, String metaDescription) throws BusinessException;
 
     /**
      * Remove Category Seo
@@ -41,11 +41,12 @@ public interface ICategorySeoService {
      * @return
      * @throws BusinessException
      */
-    boolean update(Integer categoryId, String metaTitle, String metaDescription) throws BusinessException;
+    boolean update(Integer categoryId,Integer languageId, String metaTitle, String metaDescription) throws BusinessException;
 
 
     /**
      * Get Locked Category Seo
+     *
      * @param categoryId
      * @return
      */

@@ -4,14 +4,14 @@
   -->
 
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.fulinx.spring.data.mysql.dao.mapper.ICategorySeoDao">
+<mapper namespace="com.fulinx.spring.data.mysql.dao.mapper.ICategoryDetailDao">
 
     <!--通用查询映射结果-->
-    <resultMap id="BaseResultMap" type="com.fulinx.spring.data.mysql.entity.TbCategorySeoEntity">
+    <resultMap id="BaseResultMap" type="com.fulinx.spring.data.mysql.entity.TbCategoryDetailEntity">
         <id column="id" property="id"/>
         <result column="category_id" property="categoryId" />
-        <result column="meta_title" property="metaTitle" />
-        <result column="meta_description" property="metaDescription" />
+        <result column="category_name" property="categoryName" />
+        <result column="category_description" property="categoryDescription" />
         <result column="is_delete" property="isDelete"/>
         <result column="remark" property="remark"/>
         <result column="record_version" property="recordVersion"/>
@@ -22,8 +22,8 @@
     </resultMap>
 
     <select id="lockByCategoryId" resultMap="BaseResultMap">
-        SELECT tb_category_seo.*
-        FROM tb_category_seo
+        SELECT tb_category_detail.*
+        FROM tb_category_detail
         WHERE category_id = #{categoryId}
           AND is_delete = 0 FOR UPDATE
     </select>

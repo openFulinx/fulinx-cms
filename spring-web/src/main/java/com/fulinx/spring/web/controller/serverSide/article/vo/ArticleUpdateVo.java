@@ -30,9 +30,6 @@ public class ArticleUpdateVo extends BaseParameterVo {
     @NotBlank
     private String metaTitle;
 
-    @Schema(description = "关键词")
-    private String metaKeywords;
-
     @Schema(description = "元描述")
     private String metaDescription;
 
@@ -53,9 +50,6 @@ public class ArticleUpdateVo extends BaseParameterVo {
 
     @Schema(description = "文件Tag数组")
     private List<Integer> deletedTagIds;
-
-    @Schema(description = "浏览数量")
-    private Integer viewCount;
 
     @Schema(description = "状态")
     private Boolean status;

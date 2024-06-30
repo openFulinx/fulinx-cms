@@ -14,27 +14,6 @@ jwt:
     # 刷新token时间（秒）
     refreshTokenExpiration: 64800
     # 需要认证的入口点
-    authenticationEndpoints:
-      - /users/**
-      - /user/articles/**
-      - /user/files/**
-      - /user/profiles/**
-      - /user/views/**
-      - /user/follows/**
-      - /user/comments/**
-      - /user/article/collections/**
-      - /user/article/likes/**
-      - /user/article/analytics/**
-      - /user/credits/**
-      - /share/user/articles/**
-      - /system/users/**
-      - /system/admin/users/**
-      - /system/role/**
-      - /system/permission/**
-      - /system/categories/**
-      - /system/articles/**
-      - /system/sites/**
-      - /system/brands/**
-      - /system/suppliers/**
-      - /system/files/**
-      - /system/setting/**
+#    authenticationEndpoints:
+#      - /server-side/system/user/**
+#      - /server-side/category/**

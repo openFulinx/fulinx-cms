@@ -1,7 +1,3 @@
-/*
- * Copyright (c) Minong Tech. 2023.
- */
-
 package com.fulinx.spring.data.mysql.dao.mapper;
 
 

@@ -16,9 +16,4 @@ jwt:
     # 需要认证的入口点
     authenticationEndpoints:
       - /server-side/system/user/**
-##      - /users/**
-##      - /user/files/**
-##      - /user/profiles/**
-#      - /server-side/system/user/**
-##      - /server-side/role/**
-##      - /server-side/permission/**
+      - /server-side/category/**

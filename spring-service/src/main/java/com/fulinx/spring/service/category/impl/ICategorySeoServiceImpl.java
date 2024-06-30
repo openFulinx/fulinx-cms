@@ -36,9 +36,10 @@ public class ICategorySeoServiceImpl implements ICategorySeoService {
 
     @Override
     @Transactional(rollbackFor = {Exception.class})
-    public Optional<TbCategorySeoEntity> create(Integer categoryId, String metaTitle, String metaDescription) throws BusinessException {
+    public Optional<TbCategorySeoEntity> create(Integer categoryId, Integer languageId, String metaTitle, String metaDescription) throws BusinessException {
         TbCategorySeoEntity tbCategorySeoEntity = new TbCategorySeoEntity();
         tbCategorySeoEntity.setCategoryId(categoryId);
+        tbCategorySeoEntity.setLanguageId(languageId);
         tbCategorySeoEntity.setMetaTitle(metaTitle);
         tbCategorySeoEntity.setMetaDescription(metaDescription);
         Boolean isOk = tbCategorySeoEntityService.save(tbCategorySeoEntity);
@@ -74,11 +75,12 @@ public class ICategorySeoServiceImpl implements ICategorySeoService {
      */
     @Override
     @Transactional(rollbackFor = {Exception.class})
-    public boolean update(Integer categoryId, String metaTitle, String metaDescription) throws BusinessException {
+    public boolean update(Integer categoryId, Integer languageId, String metaTitle, String metaDescription) throws BusinessException {
         TbCategorySeoEntity tbCategorySeoEntity = this.lockByCategoryId(categoryId).orElseThrow(() -> {
             log.warn("更新分类描述失败，分类描述不存在，id = {}", categoryId);
             return new BusinessException(ErrorMessageEnum.CATEGORY_SEO_NOT_EXISTS.getMessage(), ErrorMessageEnum.CATEGORY_SEO_NOT_EXISTS.getIndex());
         });
+        tbCategorySeoEntity.setLanguageId(languageId);
         tbCategorySeoEntity.setMetaTitle(metaTitle);
         tbCategorySeoEntity.setMetaDescription(metaDescription);
         return tbCategorySeoEntityService.updateById(tbCategorySeoEntity);

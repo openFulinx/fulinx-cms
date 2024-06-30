@@ -9,12 +9,8 @@
     <!--通用查询映射结果-->
     <resultMap id="BaseResultMap" type="com.fulinx.spring.data.mysql.entity.TbCategoryEntity">
         <id column="id" property="id"/>
-        <result column="category_type" property="categoryType"/>
         <result column="parent_id" property="parentId"/>
         <result column="file_id" property="fileId"/>
-        <result column="link_url" property="linkUrl"/>
-        <result column="is_menu" property="isMenu"/>
-        <result column="is_home_category" property="isHomeCategory"/>
         <result column="status" property="status"/>
         <result column="is_delete" property="isDelete"/>
         <result column="remark" property="remark"/>
@@ -29,15 +25,11 @@
         <id column="id" property="id"/>
         <result column="parent_id" property="parentId"/>
         <result column="file_id" property="fileId"/>
-        <result column="link_url" property="linkUrl"/>
-        <result column="category_type" property="categoryType"/>
+        <result column="language_code" property="languageCode"/>
         <result column="category_name" property="categoryName"/>
         <result column="category_description" property="categoryDescription"/>
         <result column="meta_title" property="metaTitle"/>
-        <result column="meta_keywords" property="metaKeywords"/>
         <result column="meta_description" property="metaDescription"/>
-        <result column="is_menu" property="isMenu"/>
-        <result column="is_home_category" property="isHomeCategory"/>
         <result column="status" property="status"/>
         <result column="is_delete" property="isDelete"/>
         <result column="remark" property="remark"/>
@@ -71,37 +63,24 @@
         MIN(tb_category.id) AS id,
         MIN(tb_category.parent_id) AS parent_id,
         MIN(tb_category.file_id) AS file_id,
-        MIN(tb_category.link_url) AS link_url,
-        MIN(tb_category.category_type) AS category_type,
         MIN(tb_category.status) AS status,
-        MIN(tb_category.is_menu) AS is_menu,
-        MIN(tb_category.is_home_category) AS is_home_category,
-        MIN(tb_category_description.category_name) AS category_name,
-        MIN(tb_category_description.category_description) AS category_description,
+        MIN(tb_category_detail.language_id) AS language_id,
+        MIN(tb_category_detail.category_name) AS category_name,
+        MIN(tb_category_detail.category_description) AS category_description,
         MIN(tb_category_seo.meta_title) AS meta_title,
-        MIN(tb_category_seo.meta_keywords) AS meta_keywords,
         MIN(tb_category_seo.meta_description) AS meta_description
         FROM
         CategoryHierarchy
         JOIN
         tb_category ON CategoryHierarchy.id = tb_category.id
         LEFT JOIN
-        tb_category_description ON tb_category_description.category_id = tb_category.id
+        tb_category_detail ON tb_category_detail.category_id = tb_category.id
         LEFT JOIN
         tb_category_seo ON tb_category_seo.category_id = tb_category.id
         WHERE
         1 = 1
         <if test="categoryName != null">
-            AND tb_category_description.category_name LIKE CONCAT(#{categoryName}, '%')
-        </if>
-        <if test="categoryType != null">
-            AND tb_category.category_type = #{categoryType}
-        </if>
-        <if test="isMenu != null">
-            AND tb_category.is_menu = #{isMenu}
-        </if>
-        <if test="isHomeCategory != null">
-            AND tb_category.is_home_category = #{isHomeCategory}
+            AND tb_category_detail.category_name LIKE CONCAT(#{categoryName}, '%')
         </if>
         <if test="status != null">
             AND tb_category.status = ${status}

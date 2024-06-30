@@ -18,7 +18,7 @@ import com.fulinx.spring.data.mysql.dao.podo.category.CategoryListResultDo;
 import com.fulinx.spring.data.mysql.entity.*;
 import com.fulinx.spring.data.mysql.service.*;
 import com.fulinx.spring.service.article.dto.ArticleListResultDto;
-import com.fulinx.spring.service.category.ICategoryDescriptionService;
+import com.fulinx.spring.service.category.ICategoryDetailService;
 import com.fulinx.spring.service.category.ICategorySeoService;
 import com.fulinx.spring.service.category.ICategoryService;
 import com.fulinx.spring.service.category.dto.CategoryArticleListResultDto;
@@ -44,7 +44,7 @@ public class ICategoryServiceImpl implements ICategoryService {
 
     private final ICategoryDao iCategoryDao;
 
-    private final ICategoryDescriptionService iCategoryDescriptionService;
+    private final ICategoryDetailService iCategoryDetailService;
 
     private final ICategorySeoService iCategorySeoService;
 
@@ -66,10 +66,10 @@ public class ICategoryServiceImpl implements ICategoryService {
 
     @Lazy
     @Autowired
-    public ICategoryServiceImpl(TbCategoryEntityService tbCategoryEntityService, ICategoryDao iCategoryDao, ICategoryDescriptionService iCategoryDescriptionService, ICategorySeoService iCategorySeoService, IFileService iFileService, TbFileEntityService tbFileEntityService, TbArticleCategoryRelationEntityService tbArticleCategoryRelationEntityService, TbArticleEntityService tbArticleEntityService, IArticleDao iArticleDao, TbUserProfileEntityService tbUserProfileEntityService, TbArticleFileRelationEntityService tbArticleFileRelationEntityService, TbArticleTagEntityService tbArticleTagEntityService) {
+    public ICategoryServiceImpl(TbCategoryEntityService tbCategoryEntityService, ICategoryDao iCategoryDao, ICategoryDetailService iCategoryDetailService, ICategorySeoService iCategorySeoService, IFileService iFileService, TbFileEntityService tbFileEntityService, TbArticleCategoryRelationEntityService tbArticleCategoryRelationEntityService, TbArticleEntityService tbArticleEntityService, IArticleDao iArticleDao, TbUserProfileEntityService tbUserProfileEntityService, TbArticleFileRelationEntityService tbArticleFileRelationEntityService, TbArticleTagEntityService tbArticleTagEntityService) {
         this.tbCategoryEntityService = tbCategoryEntityService;
         this.iCategoryDao = iCategoryDao;
-        this.iCategoryDescriptionService = iCategoryDescriptionService;
+        this.iCategoryDetailService = iCategoryDetailService;
         this.iCategorySeoService = iCategorySeoService;
         this.iFileService = iFileService;
         this.tbFileEntityService = tbFileEntityService;
@@ -85,8 +85,8 @@ public class ICategoryServiceImpl implements ICategoryService {
     @Override
     @Transactional(rollbackFor = {Exception.class})
 //    @CachePut(value = "category", key = "#id")
-    public Optional<CategoryListResultDto> create(Integer parentId,  String categoryName, String categoryDescription, String metaTitle,  String metaDescription, Integer fileId, Boolean status) throws BusinessException {
-        if (fileId != null) {
+    public Optional<CategoryListResultDto> create(Integer parentId, Integer languageId, String categoryName, String categoryDescription, String metaTitle, String metaDescription, Integer fileId, Boolean status) throws BusinessException {
+        if (fileId != null && fileId != 0) {
             // 检查FileId是否存在
             iFileService.lockById(fileId).orElseThrow(() -> {
                 log.warn("新建分类失败，失败原因，文件不存在， fileId= {}", fileId);
@@ -100,9 +100,9 @@ public class ICategoryServiceImpl implements ICategoryService {
         tbCategoryEntity.setStatus(status);
         Boolean isOk = tbCategoryEntityService.save(tbCategoryEntity);
         // 新增分类描述
-        iCategoryDescriptionService.create(tbCategoryEntity.getId(), trim(categoryName), categoryDescription);
+        iCategoryDetailService.create(tbCategoryEntity.getId(), languageId, trim(categoryName), categoryDescription);
         // 新增分类SEO
-        iCategorySeoService.create(tbCategoryEntity.getId(), trim(metaTitle), trim(metaDescription));
+        iCategorySeoService.create(tbCategoryEntity.getId(), languageId, trim(metaTitle), trim(metaDescription));
         return isOk ? this.getById(tbCategoryEntity.getId()) : null;
     }
 
@@ -122,7 +122,7 @@ public class ICategoryServiceImpl implements ICategoryService {
             });
             tbCategoryEntityService.removeById(tbCategoryEntity);
             // 删除分类描述
-            iCategoryDescriptionService.remove(id);
+            iCategoryDetailService.remove(id);
             // 删除分类SEO
             iCategorySeoService.remove(id);
         }
@@ -143,7 +143,7 @@ public class ICategoryServiceImpl implements ICategoryService {
     @Override
     @Transactional(rollbackFor = {Exception.class})
 //    @CachePut(value = "category", key = "#id")
-    public Optional<CategoryListResultDto> update(Integer id, Integer parentId, String categoryName, String categoryDescription, String metaTitle,  String metaDescription, Integer fileId, Boolean status) throws BusinessException {
+    public Optional<CategoryListResultDto> update(Integer id, Integer parentId, Integer languageId, String categoryName, String categoryDescription, String metaTitle, String metaDescription, Integer fileId, Boolean status) throws BusinessException {
         TbCategoryEntity tbCategoryEntity = this.lockById(id).orElseThrow(() -> {
             log.warn("更新分类失败，分类不存在，id = {}", id);
             return new BusinessException(ErrorMessageEnum.CATEGORY_NOT_EXISTS.getMessage(), ErrorMessageEnum.CATEGORY_NOT_EXISTS.getIndex());
@@ -155,7 +155,7 @@ public class ICategoryServiceImpl implements ICategoryService {
             throw new BusinessException(ErrorMessageEnum.CATEGORY_OF_PARENT_CAN_NOT_BE_IT_SELF.getMessage(), ErrorMessageEnum.CATEGORY_OF_PARENT_CAN_NOT_BE_IT_SELF.getIndex());
         }
 
-        if (fileId != null) {
+        if (fileId != null && fileId != 0) {
             // 检查FileId是否存在
             iFileService.lockById(fileId).orElseThrow(() -> {
                 log.warn("新建分类失败，失败原因，文件不存在， fileId= {}", fileId);
@@ -167,9 +167,9 @@ public class ICategoryServiceImpl implements ICategoryService {
         tbCategoryEntity.setFileId(fileId);
         tbCategoryEntity.setStatus(status);
         // 更新分类描述
-        iCategoryDescriptionService.update(id, trim(categoryName), categoryDescription);
+        iCategoryDetailService.update(id, languageId, trim(categoryName), categoryDescription);
         // 更新分类SEO
-        iCategorySeoService.update(id, trim(metaTitle), trim(metaDescription));
+        iCategorySeoService.update(id, languageId, trim(metaTitle), trim(metaDescription));
         boolean isOk = tbCategoryEntityService.updateById(tbCategoryEntity);
         return isOk ? this.getById(tbCategoryEntity.getId()) : null;
     }
@@ -227,7 +227,6 @@ public class ICategoryServiceImpl implements ICategoryService {
     @Override
     public List<CategoryArticleListResultDto> listCategoryArticle() {
         CategoryListConditionPo categoryListConditionPo = new CategoryListConditionPo();
-        categoryListConditionPo.setIsHomeCategory(true);
         List<CategoryListResultDo> list = iCategoryDao.list(categoryListConditionPo);
         ArrayList<CategoryArticleListResultDto> categoryArticleListResultDtoArrayList = new ArrayList<>();
         for (CategoryListResultDo categoryListResultDo : list) {

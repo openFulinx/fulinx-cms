@@ -6,6 +6,7 @@ package com.fulinx.spring.data.mysql.dao.podo.category;
 
 import com.fulinx.spring.data.mysql.entity.TbFileEntity;
 import io.swagger.v3.oas.annotations.media.Schema;
+import jakarta.validation.constraints.NotBlank;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 
@@ -35,6 +36,12 @@ public class CategoryListResultDo implements Serializable {
     @Schema(description = "File Vo")
     private TbFileEntity fileVo;
 
+    @Schema(description = "Language Id")
+    private Integer languageId;
+
+    @Schema(description = "Language Code")
+    private String languageCode;
+
     @Schema(description = "Category Name")
     private String categoryName;
 
@@ -43,9 +50,6 @@ public class CategoryListResultDo implements Serializable {
 
     @Schema(description = "Meta Title")
     private String metaTitle;
-
-    @Schema(description = "Meta Keywords")
-    private String metaKeywords;
 
     @Schema(description = "Meta Description")
     private String metaDescription;

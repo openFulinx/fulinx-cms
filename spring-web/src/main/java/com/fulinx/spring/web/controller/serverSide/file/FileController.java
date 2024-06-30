@@ -80,7 +80,7 @@ public class FileController extends BaseServerSideController {
             String originalFileName = file.getOriginalFilename();
             String fileExtension = getFileExtension(originalFileName); // 之前提到的获取文件扩展名的方法
             String newFileName = UUID.randomUUID().toString() + "." + fileExtension;
-            String fileUrl = uploadPathService.getUrlPrefix() + date + "/" + newFileName;
+            String fileUrl = "/" + date + "/" + newFileName;
 
             // 如果保存路径不存在，则创建
             File uploadDir = new File(filePath);
@@ -114,7 +114,7 @@ public class FileController extends BaseServerSideController {
      */
     @Operation(summary = "删除文件", method = "DELETE")
     @DeleteMapping()
-    @PreAuthorize("hasAnyAuthority('sys:file','sys:file:remove')")
+//    @PreAuthorize("hasAnyAuthority('sys:file','sys:file:remove')")
     public ResultVo<Boolean> Remove(@RequestBody @Valid FileDeleteVo fileDeleteVo) throws BusinessException {
         return ResultVo.build(iFileService.remove(fileDeleteVo.getIds()));
     }
@@ -128,7 +128,7 @@ public class FileController extends BaseServerSideController {
      */
     @Operation(summary = "查看文件", method = "GET")
     @GetMapping("/{id}")
-    @PreAuthorize("hasAnyAuthority('sys:file','sys:file:show')")
+//    @PreAuthorize("hasAnyAuthority('sys:file','sys:file:show')")
     public ResultVo<Optional<FileListResultDto>> Show(@PathVariable(value = "id") @Valid @NonNull @Min(1) Integer id) throws BusinessException {
         return ResultVo.build(iFileService.getById(id));
     }
@@ -142,7 +142,7 @@ public class FileController extends BaseServerSideController {
      */
     @Operation(summary = "文件列表", method = "POST")
     @PostMapping("/pagination")
-    @PreAuthorize("hasAnyAuthority('sys:file','sys:file:pagination')")
+//    @PreAuthorize("hasAnyAuthority('sys:file','sys:file:pagination')")
     public ResultVo<ResultListVo<FileListResultDto>> Pagination(@RequestBody @Valid FilePaginationParameterVo userFilePaginationParameterVo) throws BusinessException {
         FileQueryConditionDto fileQueryConditionDto = MiscUtils.copyProperties(userFilePaginationParameterVo, FileQueryConditionDto.class);
         IPage<FileListResultDto> fileListResultDoIPage = iFileService.page(fileQueryConditionDto, userFilePaginationParameterVo.getPageNumber(), userFilePaginationParameterVo.getPageSize());

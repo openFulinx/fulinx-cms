@@ -21,11 +21,11 @@ public interface ICategoryService {
      * @return
      * @throws BusinessException
      */
-    Optional<CategoryListResultDto> create(Integer parentId,  String categoryName, String categoryDescription, String metaTitle,  String metaDescription, Integer fileId, Boolean status) throws BusinessException;
+    Optional<CategoryListResultDto> create(Integer parentId, Integer languageId, String categoryName, String categoryDescription, String metaTitle, String metaDescription, Integer fileId, Boolean status) throws BusinessException;
 
     Boolean remove(List<Integer> ids) throws BusinessException;
 
-    Optional<CategoryListResultDto> update(Integer id, Integer parentId,  String categoryName, String categoryDescription, String metaTitle, String metaDescription, Integer fileId, Boolean status) throws BusinessException;
+    Optional<CategoryListResultDto> update(Integer id, Integer parentId, Integer languageId, String categoryName, String categoryDescription, String metaTitle, String metaDescription, Integer fileId, Boolean status) throws BusinessException;
 
 
     /**
