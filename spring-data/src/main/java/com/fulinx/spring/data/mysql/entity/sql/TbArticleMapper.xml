@@ -5,8 +5,9 @@
     <!-- 通用查询映射结果 -->
     <resultMap id="BaseResultMap" type="com.fulinx.spring.data.mysql.entity.TbArticleEntity">
         <id column="id" property="id" />
-        <result column="is_delete" property="isDelete" />
+        <result column="article_type" property="articleType" />
         <result column="status" property="status" />
+        <result column="is_delete" property="isDelete" />
         <result column="remark" property="remark" />
         <result column="record_version" property="recordVersion" />
         <result column="record_create_name" property="recordCreateName" />
@@ -17,7 +18,7 @@
 
     <!-- 通用查询结果列 -->
     <sql id="Base_Column_List">
-        id, is_delete, status, remark, record_version, record_create_name, record_update_name, record_create_time, record_update_time
+        id, article_type, status, is_delete, remark, record_version, record_create_name, record_update_name, record_create_time, record_update_time
     </sql>
 
 </mapper>

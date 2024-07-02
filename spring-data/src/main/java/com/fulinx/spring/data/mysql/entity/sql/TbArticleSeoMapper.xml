@@ -6,6 +6,7 @@
     <resultMap id="BaseResultMap" type="com.fulinx.spring.data.mysql.entity.TbArticleSeoEntity">
         <id column="id" property="id" />
         <result column="article_id" property="articleId" />
+        <result column="language_id" property="languageId" />
         <result column="meta_title" property="metaTitle" />
         <result column="meta_description" property="metaDescription" />
         <result column="is_delete" property="isDelete" />
@@ -19,7 +20,7 @@
 
     <!-- 通用查询结果列 -->
     <sql id="Base_Column_List">
-        id, article_id, meta_title, meta_description, is_delete, remark, record_version, record_create_name, record_update_name, record_create_time, record_update_time
+        id, article_id, language_id, meta_title, meta_description, is_delete, remark, record_version, record_create_name, record_update_name, record_create_time, record_update_time
     </sql>
 
 </mapper>

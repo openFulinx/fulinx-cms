@@ -26,12 +26,12 @@ public interface IArticleService {
      * @return
      * @throws BusinessException
      */
-    Optional<TbArticleEntity> create(String articleName, String articleDescription, String metaTitle, String metaDescription, List<Integer> fileIds, List<Integer> categoryIds, List<String> tags, Boolean status) throws BusinessException;
+    Optional<TbArticleEntity> create(Integer articleType,Integer languageId, String articleName, String articleDescription,String customs, String metaTitle, String metaDescription, List<Integer> fileIds, List<Integer> categoryIds, List<String> tags, Boolean status) throws BusinessException;
 
 
     Boolean remove(List<Integer> ids) throws BusinessException;
 
-    TbArticleEntity update(Integer id, String articleName, String articleDescription, String metaTitle, String metaDescription, List<Integer> fileIds, List<Integer> deletedArticleFileIds, List<Integer> categoryIds, List<Integer> deletedCategoryIds, List<String> tags, List<Integer> deletedTagIds, Boolean status) throws BusinessException;
+    TbArticleEntity update(Integer articleType,Integer id, Integer languageId, String articleName, String articleDescription,String customs, String metaTitle, String metaDescription, List<Integer> fileIds, List<Integer> deletedArticleFileIds, List<Integer> categoryIds, List<Integer> deletedCategoryIds, List<String> tags, List<Integer> deletedTagIds, Boolean status) throws BusinessException;
 
 
     /**

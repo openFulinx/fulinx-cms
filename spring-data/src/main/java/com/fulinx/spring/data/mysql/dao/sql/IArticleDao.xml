@@ -30,14 +30,31 @@
     </resultMap>
 
     <select id="list" resultMap="ArticleListResultMap">
-        SELECT tb_article.*
-        FROM
-        tb_article
+        SELECT DISTINCT tb_article.*,tb_article_detail.article_name, tb_article_detail.article_description,
+        tb_article_detail.customs, tb_article_detail.language_id, tb_article_seo.meta_title,
+        tb_article_seo.meta_description
+        FROM tb_article
+        LEFT JOIN
+        tb_article_category_relation ON tb_article_category_relation.article_id = tb_article.id
+        LEFT JOIN
+        tb_article_seo ON tb_article_seo.article_id = tb_article.id
+        LEFT JOIN
+        tb_article_detail ON tb_article_detail.article_id = tb_article.id
         WHERE
         1 = 1
-        <if test="id != null">
-            AND tb_article.id = ${id}
+        <if test="articleId != null">
+            AND tb_article.id = #{articleId}
         </if>
+        <if test="categoryId != null">
+            AND tb_article_category_relation.category_id = #{categoryId}
+        </if>
+        <if test="articleName != null">
+            AND tb_article_detail.article_name LIKE CONCAT('%',#{articleName}, '%')
+        </if>
+        <if test="status != null">
+            AND tb_article.status = #{status}
+        </if>
+        AND tb_article_category_relation.is_delete = 0
         <choose>
             <when test="isDelete == null">
                 AND tb_article.is_delete = 0
@@ -46,6 +63,8 @@
                 AND tb_article.is_delete = #{isDelete}
             </otherwise>
         </choose>
+        AND tb_article_category_relation.is_delete = 0
+        ORDER BY tb_article.id desc
     </select>
 
     <select id="lockById" resultMap="BaseResultMap">

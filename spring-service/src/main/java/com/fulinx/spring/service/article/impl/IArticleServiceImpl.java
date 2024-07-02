@@ -69,9 +69,13 @@ public class IArticleServiceImpl implements IArticleService {
 
     private final TbArticleSeoEntityService tbArticleSeoEntityService;
 
+    private final IArticleDetailService iArticleDetailService;
+
+    private final TbArticleDetailEntityService tbArticleDetailEntityService;
+
     @Autowired
     @Lazy
-    public IArticleServiceImpl(TbArticleEntityService tbArticleEntityService, TbArticleTagEntityService tbArticleTagEntityService, TbArticleFileRelationEntityService tbArticleFileRelationEntityService, IArticleDao iArticleDao, IArticleSeoService iArticleSeoService, IArticleFileService iArticleFileService, IArticleCategoryService iArticleCategoryService, IArticleTagService iArticleTagService, IFileService iFileService, ICategoryService iCategoryService, TbFileEntityService tbFileEntityService, IUserService iUserService, TbUserEntityService tbUserEntityService, TbUserProfileEntityService tbUserProfileEntityService, TbArticleCategoryRelationEntityService tbArticleCategoryRelationEntityService, TbCategoryEntityService tbCategoryEntityService, TbArticleSeoEntityService tbArticleSeoEntityService) {
+    public IArticleServiceImpl(TbArticleEntityService tbArticleEntityService, TbArticleTagEntityService tbArticleTagEntityService, TbArticleFileRelationEntityService tbArticleFileRelationEntityService, IArticleDao iArticleDao, IArticleSeoService iArticleSeoService, IArticleFileService iArticleFileService, IArticleCategoryService iArticleCategoryService, IArticleTagService iArticleTagService, IFileService iFileService, ICategoryService iCategoryService, TbFileEntityService tbFileEntityService, IUserService iUserService, TbUserEntityService tbUserEntityService, TbUserProfileEntityService tbUserProfileEntityService, TbArticleCategoryRelationEntityService tbArticleCategoryRelationEntityService, TbCategoryEntityService tbCategoryEntityService, TbArticleSeoEntityService tbArticleSeoEntityService, IArticleDetailService iArticleDetailService, TbArticleDetailEntityService tbArticleDetailEntityService) {
         this.tbArticleEntityService = tbArticleEntityService;
         this.tbArticleTagEntityService = tbArticleTagEntityService;
         this.tbArticleFileRelationEntityService = tbArticleFileRelationEntityService;
@@ -89,6 +93,8 @@ public class IArticleServiceImpl implements IArticleService {
         this.tbArticleCategoryRelationEntityService = tbArticleCategoryRelationEntityService;
         this.tbCategoryEntityService = tbCategoryEntityService;
         this.tbArticleSeoEntityService = tbArticleSeoEntityService;
+        this.iArticleDetailService = iArticleDetailService;
+        this.tbArticleDetailEntityService = tbArticleDetailEntityService;
     }
 
 
@@ -106,7 +112,7 @@ public class IArticleServiceImpl implements IArticleService {
      */
     @Override
     @Transactional(rollbackFor = {Exception.class})
-    public Optional<TbArticleEntity> create(String articleName, String articleDescription, String metaTitle, String metaDescription, List<Integer> fileIds, List<Integer> categoryIds, List<String> tags, Boolean status) throws BusinessException {
+    public Optional<TbArticleEntity> create(Integer articleType, Integer languageId, String articleName, String articleDescription, String customs, String metaTitle, String metaDescription, List<Integer> fileIds, List<Integer> categoryIds, List<String> tags, Boolean status) throws BusinessException {
 
         // 检查File是否存在
         for (Integer fileId : fileIds) {
@@ -132,10 +138,12 @@ public class IArticleServiceImpl implements IArticleService {
         }
 
         TbArticleEntity tbArticleEntity = new TbArticleEntity();
+        tbArticleEntity.setArticleType(articleType);
         tbArticleEntity.setStatus(status);
         boolean isOk = tbArticleEntityService.save(tbArticleEntity);
         if (isOk) {
-            iArticleSeoService.create(tbArticleEntity.getId(), metaTitle, metaDescription);
+            iArticleDetailService.create(tbArticleEntity.getId(), languageId, articleName, articleDescription, customs);
+            iArticleSeoService.create(tbArticleEntity.getId(), languageId, metaTitle, metaDescription);
             for (Integer fileId : fileIds) {
                 iArticleFileService.create(tbArticleEntity.getId(), fileId);
             }
@@ -169,8 +177,16 @@ public class IArticleServiceImpl implements IArticleService {
                 return new BusinessException(ErrorMessageEnum.ARTICLE_NOT_EXISTS.getMessage(), ErrorMessageEnum.ARTICLE_NOT_EXISTS.getIndex());
             });
             tbArticleEntityService.removeById(tbArticleEntity);
-            // 删除分类SEO
-            iArticleSeoService.remove(id);
+//            // 删除SEO
+//            iArticleSeoService.removeByArticleId(id);
+//            // 删除文章详情
+//            iArticleDetailService.removeByArticleId(id);
+//            // 删除文章文件
+//            iArticleFileService.removeByArticleId(id);
+//            // 删除文章分类
+//            iArticleCategoryService.remove(id);
+//            // 删除文章标签
+//            iArticleTagService.remove(id);
         }
         return null;
     }
@@ -194,7 +210,7 @@ public class IArticleServiceImpl implements IArticleService {
      */
     @Override
     @Transactional(rollbackFor = {Exception.class})
-    public TbArticleEntity update(Integer id, String articleName, String articleDescription, String metaTitle, String metaDescription, List<Integer> fileIds, List<Integer> deletedFileIds, List<Integer> categoryIds, List<Integer> deletedCategoryIds, List<String> tags, List<Integer> deletedTagIds, Boolean status) throws BusinessException {
+    public TbArticleEntity update(Integer articleType,Integer id, Integer languageId, String articleName, String articleDescription, String customs, String metaTitle, String metaDescription, List<Integer> fileIds, List<Integer> deletedFileIds, List<Integer> categoryIds, List<Integer> deletedCategoryIds, List<String> tags, List<Integer> deletedTagIds, Boolean status) throws BusinessException {
         TbArticleEntity tbArticleEntity = this.lockById(id).orElseThrow(() -> {
             log.warn("更新文章失败，文章不存在，id = {}", id);
             return new BusinessException(ErrorMessageEnum.ARTICLE_NOT_EXISTS.getMessage(), ErrorMessageEnum.ARTICLE_NOT_EXISTS.getIndex());
@@ -274,11 +290,12 @@ public class IArticleServiceImpl implements IArticleService {
             tbArticleTagEntity.setIsDelete(RecordRemoveStatusEnum._LOGICALLY_DELETED.getIndex());
             tbArticleTagEntityService.removeById(tbArticleTagEntity);
         }
+        tbArticleEntity.setArticleType(articleType);
         tbArticleEntity.setStatus(status);
         boolean isOk = tbArticleEntityService.updateById(tbArticleEntity);
 
         if (isOk) {
-            iArticleSeoService.update(tbArticleEntity.getId(), metaTitle, metaDescription);
+
             if (!notSaveFileIds.isEmpty()) {
                 for (Integer fileId : notSaveFileIds) {
                     iArticleFileService.create(tbArticleEntity.getId(), fileId);
@@ -297,10 +314,16 @@ public class IArticleServiceImpl implements IArticleService {
                 }
             }
 
-            List<TbArticleSeoEntity> list = tbArticleSeoEntityService.lambdaQuery().eq(TbArticleSeoEntity::getArticleId, id).list();
+            List<TbArticleSeoEntity> list = tbArticleSeoEntityService.lambdaQuery().eq(TbArticleSeoEntity::getArticleId, id).eq(TbArticleSeoEntity::getLanguageId, languageId).list();
             if (!list.isEmpty()) {
                 TbArticleSeoEntity tbArticleSeoEntity = list.get(0);
-                iArticleSeoService.update(tbArticleSeoEntity.getId(), metaTitle, metaDescription);
+                iArticleSeoService.update(tbArticleSeoEntity.getId(), languageId, metaTitle, metaDescription);
+            }
+
+            List<TbArticleDetailEntity> listDetail = tbArticleDetailEntityService.lambdaQuery().eq(TbArticleDetailEntity::getArticleId, id).eq(TbArticleDetailEntity::getLanguageId, languageId).list();
+            if (!listDetail.isEmpty()) {
+                TbArticleDetailEntity tbArticleDetailEntity = listDetail.get(0);
+                iArticleDetailService.update(tbArticleDetailEntity.getId(), languageId, articleName, articleDescription, customs);
             }
 
         }
@@ -349,7 +372,60 @@ public class IArticleServiceImpl implements IArticleService {
     public List<ArticleListResultDto> list(ArticleQueryConditionDto articleQueryConditionDto) {
         ArticleListConditionPo articleListConditionPo = MiscUtils.copyProperties(articleQueryConditionDto, ArticleListConditionPo.class);
         List<ArticleListResultDo> list = iArticleDao.list(articleListConditionPo);
+        return getArticleListResultDtos(list);
+    }
+
+    private List<ArticleListResultDto> getArticleListResultDtos(List<ArticleListResultDo> list) {
+        for (ArticleListResultDo articleListResultDo : list) {
+
+            // 查找文件
+            List<TbArticleFileRelationEntity> tbArticleFileEntityList = tbArticleFileRelationEntityService.lambdaQuery().eq(TbArticleFileRelationEntity::getArticleId, articleListResultDo.getId()).list();
+            ArrayList<TbFileEntity> tbFileEntities = new ArrayList<>();
+            if (!tbArticleFileEntityList.isEmpty()) {
+                for (TbArticleFileRelationEntity tbArticleFileEntity : tbArticleFileEntityList) {
+                    TbFileEntity tbFileEntityServiceById = tbFileEntityService.getById(tbArticleFileEntity.getFileId());
+                    tbFileEntities.add(tbFileEntityServiceById);
+                }
+                articleListResultDo.setFileList(tbFileEntities);
+            }
+
+            // Tags
+
+            List<TbArticleTagEntity> tbArticleTagEntityList = tbArticleTagEntityService.lambdaQuery().eq(TbArticleTagEntity::getArticleId, articleListResultDo.getId()).list();
+            articleListResultDo.setTags(tbArticleTagEntityList);
+
+            // 分类
+            List<TbArticleCategoryRelationEntity> tbArticleCategoryEntities = tbArticleCategoryRelationEntityService.lambdaQuery().eq(TbArticleCategoryRelationEntity::getArticleId, articleListResultDo.getId()).list();
+            List<List<Integer>> categoryIds = new ArrayList<>();
+            if (tbArticleCategoryEntities.size() > 0) {
+                for (TbArticleCategoryRelationEntity tbArticleCategoryEntity : tbArticleCategoryEntities) {
+                    List<Integer> allParentCategoryIds = findAllParentCategoryIds(tbArticleCategoryEntity.getCategoryId());
+                    categoryIds.add(allParentCategoryIds);
+                }
+            }
+            articleListResultDo.setCategoryIds(categoryIds);
+        }
+
         return MiscUtils.copyList(list, ArticleListResultDto.class);
+    }
+
+    public List<Integer> findAllParentCategoryIds(int categoryId) {
+        List<Integer> parentIds = new ArrayList<>();
+        // Find the parent ID of the current category
+        List<TbCategoryEntity> list = tbCategoryEntityService.lambdaQuery()
+                .eq(TbCategoryEntity::getId, categoryId)
+                .list();
+        if (!list.isEmpty()) {
+            TbCategoryEntity tbCategoryEntity = list.get(0);
+            Integer parentId = tbCategoryEntity.getParentId();
+            // Recursively find parent category IDs
+            if (parentId != 0) {
+                parentIds.addAll(findAllParentCategoryIds(parentId));
+            }
+            // Add the current category ID to the result list (at the end)
+            parentIds.add(categoryId);
+        }
+        return parentIds;
     }
 
     /**

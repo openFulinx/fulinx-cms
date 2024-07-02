@@ -42,7 +42,7 @@ import java.util.UUID;
 @RestController
 @Slf4j
 @Validated
-@RequestMapping("/system/files")
+@RequestMapping("/server-side/file")
 public class FileController extends BaseServerSideController {
 
     private final IFileService iFileService;

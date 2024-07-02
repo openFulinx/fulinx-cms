@@ -17,3 +17,5 @@ jwt:
     authenticationEndpoints:
       - /server-side/system/user/**
       - /server-side/category/**
+      - /server-side/article/**
+      - /server-side/file/**

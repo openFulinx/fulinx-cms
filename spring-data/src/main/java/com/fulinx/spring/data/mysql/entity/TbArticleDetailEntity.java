@@ -39,20 +39,17 @@ public class TbArticleDetailEntity extends Model<TbArticleDetailEntity> {
     @Schema(description = "Article ID")
     private Integer articleId;
 
-    @Schema(description = "Language Code")
-    private String languageCode;
+    @Schema(description = "Language ID")
+    private Integer languageId;
 
     @Schema(description = "Article Name")
     private String articleName;
 
-    @Schema(description = "Meta Title")
-    private String metaTitle;
-
-    @Schema(description = "Meta Description")
-    private String metaDescription;
-
     @Schema(description = "Description")
-    private String description;
+    private String articleDescription;
+
+    @Schema(description = "Customs")
+    private String customs;
 
     @Schema(description = "Soft Delete Flag")
     @TableLogic
@@ -85,15 +82,13 @@ public class TbArticleDetailEntity extends Model<TbArticleDetailEntity> {
 
     public static final String ARTICLE_ID = "article_id";
 
-    public static final String LANGUAGE_CODE = "language_code";
+    public static final String LANGUAGE_ID = "language_id";
 
     public static final String ARTICLE_NAME = "article_name";
 
-    public static final String META_TITLE = "meta_title";
+    public static final String ARTICLE_DESCRIPTION = "article_description";
 
-    public static final String META_DESCRIPTION = "meta_description";
-
-    public static final String DESCRIPTION = "description";
+    public static final String CUSTOMS = "customs";
 
     public static final String IS_DELETE = "is_delete";
 

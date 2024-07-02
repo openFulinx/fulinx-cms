@@ -39,6 +39,9 @@ public class TbArticleSeoEntity extends Model<TbArticleSeoEntity> {
     @Schema(description = "Article ID")
     private Integer articleId;
 
+    @Schema(description = "Langauge ID")
+    private Integer languageId;
+
     @Schema(description = "Meta Title")
     private String metaTitle;
 
@@ -75,6 +78,8 @@ public class TbArticleSeoEntity extends Model<TbArticleSeoEntity> {
     public static final String ID = "id";
 
     public static final String ARTICLE_ID = "article_id";
+
+    public static final String LANGUAGE_ID = "language_id";
 
     public static final String META_TITLE = "meta_title";
 

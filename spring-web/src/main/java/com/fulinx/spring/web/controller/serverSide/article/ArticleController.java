@@ -51,9 +51,8 @@ public class ArticleController extends BaseServerSideController {
      */
     @Operation(summary = "新增文章", method = "POST")
     @PostMapping
-    public ResultVo<Optional<TbArticleEntity>> CreateArticle(@RequestBody @Valid ArticleCreateVo articleCreateVo) throws BusinessException {
-        Integer systemUserId = getSystemUserId();
-        return ResultVo.build(iArticleService.create(articleCreateVo.getArticleName(), articleCreateVo.getArticleDescription(), articleCreateVo.getMetaTitle(),  articleCreateVo.getMetaDescription(), articleCreateVo.getFileIds(), articleCreateVo.getCategoryIds(), articleCreateVo.getTags(), articleCreateVo.getStatus()));
+    public ResultVo<Optional<TbArticleEntity>> Create(@RequestBody @Valid ArticleCreateVo articleCreateVo) throws BusinessException {
+        return ResultVo.build(iArticleService.create(articleCreateVo.getArticleType(), articleCreateVo.getLanguageId(), articleCreateVo.getArticleName(), articleCreateVo.getArticleDescription(), articleCreateVo.getCustoms(), articleCreateVo.getMetaTitle(), articleCreateVo.getMetaDescription(), articleCreateVo.getFileIds(), articleCreateVo.getCategoryIds(), articleCreateVo.getTags(), articleCreateVo.getStatus()));
     }
 
 
@@ -80,8 +79,8 @@ public class ArticleController extends BaseServerSideController {
      */
     @Operation(summary = "更新文章", method = "PUT")
     @PutMapping("/{id}")
-    public ResultVo<TbArticleEntity> UpdateArticle(@PathVariable(value = "id") @Valid @NotNull @Min(1) Integer id, @RequestBody @Valid ArticleUpdateVo articleUpdateVo) throws BusinessException {
-        return ResultVo.build(iArticleService.update(id, articleUpdateVo.getArticleName(), articleUpdateVo.getArticleDescription(), articleUpdateVo.getMetaTitle(),  articleUpdateVo.getMetaDescription(), articleUpdateVo.getFileIds(), articleUpdateVo.getDeletedFileIds(), articleUpdateVo.getCategoryIds(), articleUpdateVo.getDeletedCategoryIds(), articleUpdateVo.getTags(), articleUpdateVo.getDeletedTagIds(), articleUpdateVo.getStatus()));
+    public ResultVo<TbArticleEntity> Update(@PathVariable(value = "id") @Valid @NotNull @Min(1) Integer id, @RequestBody @Valid ArticleUpdateVo articleUpdateVo) throws BusinessException {
+        return ResultVo.build(iArticleService.update(id, articleUpdateVo.getArticleType(), articleUpdateVo.getLanguageId(), articleUpdateVo.getArticleName(), articleUpdateVo.getArticleDescription(), articleUpdateVo.getCustoms(), articleUpdateVo.getMetaTitle(), articleUpdateVo.getMetaDescription(), articleUpdateVo.getFileIds(), articleUpdateVo.getDeletedFileIds(), articleUpdateVo.getCategoryIds(), articleUpdateVo.getDeletedCategoryIds(), articleUpdateVo.getTags(), articleUpdateVo.getDeletedTagIds(), articleUpdateVo.getStatus()));
     }
 
     /**
@@ -93,7 +92,7 @@ public class ArticleController extends BaseServerSideController {
      */
     @Operation(summary = "查看文章", method = "GET")
     @GetMapping("/{id}")
-    public ResultVo<Optional<ArticleListResultDto>> ShowArticle(@PathVariable(value = "id") @Valid @NonNull @Min(1) Integer id) throws BusinessException {
+    public ResultVo<Optional<ArticleListResultDto>> Show(@PathVariable(value = "id") @Valid @NonNull @Min(1) Integer id) throws BusinessException {
         return ResultVo.build(iArticleService.getById(id));
     }
 
@@ -106,7 +105,7 @@ public class ArticleController extends BaseServerSideController {
      */
     @Operation(summary = "全部文章列表", method = "POST")
     @PostMapping("/pagination")
-    public ResultVo<ResultListVo<ArticleListResultDto>> PaginationAll(@RequestBody @Valid ArticlePaginationParameterVo articlePaginationParameterVo) throws BusinessException {
+    public ResultVo<ResultListVo<ArticleListResultDto>> Pagination(@RequestBody @Valid ArticlePaginationParameterVo articlePaginationParameterVo) throws BusinessException {
         ArticleQueryConditionDto articleQueryConditionDto = MiscUtils.copyProperties(articlePaginationParameterVo, ArticleQueryConditionDto.class);
         IPage<ArticleListResultDto> articleListResultDoIPage = iArticleService.page(articleQueryConditionDto, articlePaginationParameterVo.getPageNumber(), articlePaginationParameterVo.getPageSize());
         return ResultVo.build(ResultListVo.build(articleListResultDoIPage.getRecords(), articleListResultDoIPage.getTotal()));

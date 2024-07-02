@@ -27,8 +27,29 @@ public class ArticleListResultDo implements Serializable {
     @Schema(description = "Article ID")
     private Integer id;
 
+    @Schema(description = "Article Type")
+    private Integer articleType;
+
     @Schema(description = "Category Id")
     private Integer categoryId;
+
+    @Schema(description = "Language ID")
+    private Integer languageId;
+
+    @Schema(description = "Article Name")
+    private String articleName;
+
+    @Schema(description = "Description")
+    private String articleDescription;
+
+    @Schema(description = "Customs")
+    private String customs;
+
+    @Schema(description = "Meta Title")
+    private String metaTitle;
+
+    @Schema(description = "Meta Description")
+    private String metaDescription;
 
     @Schema(description = "Category Ids")
     private List<List<Integer>> categoryIds;

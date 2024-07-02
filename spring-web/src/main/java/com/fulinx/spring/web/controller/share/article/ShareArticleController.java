@@ -2,12 +2,14 @@
  * Copyright (c) Minong Tech. 2023.
  */
 
-package com.fulinx.spring.web.controller.share.language;
+package com.fulinx.spring.web.controller.share.article;
 
 import com.fulinx.spring.core.generic.ResultListVo;
 import com.fulinx.spring.core.generic.ResultVo;
 import com.fulinx.spring.core.spring.exception.BusinessException;
+import com.fulinx.spring.data.mysql.enums.ArticleTypeEnum;
 import com.fulinx.spring.data.mysql.enums.LanguageEnum;
+import com.fulinx.spring.web.controller.share.article.vo.ShareArticleTypeListVo;
 import com.fulinx.spring.web.controller.share.language.vo.ShareLanguageListVo;
 import com.fulinx.spring.web.framework.base.BaseController;
 import io.swagger.v3.oas.annotations.Operation;
@@ -23,12 +25,12 @@ import org.springframework.web.bind.annotation.RestController;
 import java.util.List;
 import java.util.Map;
 
-@Tag(name = "公开接口-语言列表")
+@Tag(name = "公开接口-文章")
 @Slf4j
 @Validated
 @RestController
-@RequestMapping("/share/public/language")
-public class ShareLanguageController extends BaseController {
+@RequestMapping("/share/public/article")
+public class ShareArticleController extends BaseController {
 
     /**
      * 列表-不带分页
@@ -36,10 +38,10 @@ public class ShareLanguageController extends BaseController {
      * @return
      * @throws BusinessException
      */
-    @Operation(summary = "语言列表 - 不带分页", method = "POST")
-    @PostMapping("/list")
-    public ResultVo<ResultListVo<?>> ListLanguage(@RequestBody(required = false) @Valid ShareLanguageListVo shareLanguageListVo) throws BusinessException {
-        List<Map<String, Object>> languageInfoList = LanguageEnum.getLanguageInfoList(shareLanguageListVo.getLanguageCode());
-        return ResultVo.build(ResultListVo.build(languageInfoList, languageInfoList.size()));
+    @Operation(summary = "文章类型列表 - 不带分页", method = "POST")
+    @PostMapping("/type/list")
+    public ResultVo<ResultListVo<?>> ListArticleType(@RequestBody(required = false) @Valid ShareArticleTypeListVo shareArticleTypeListVo) throws BusinessException {
+        List<Map<String, Object>> articleTypeList = ArticleTypeEnum.getLanguageInfoList(shareArticleTypeListVo.getArticleTypeCode());
+        return ResultVo.build(ResultListVo.build(articleTypeList, articleTypeList.size()));
     }
 }

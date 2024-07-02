@@ -36,12 +36,15 @@ public class TbArticleEntity extends Model<TbArticleEntity> {
     @TableId(value = "id", type = IdType.AUTO)
     private Integer id;
 
-    @Schema(description = "Soft Delete Flag")
-    @TableLogic
-    private Integer isDelete;
+    @Schema(description = "Article Type, 1-Blog, 2-Page, 3-Product, 4-Video,5-image")
+    private Integer articleType;
 
     @Schema(description = "Status, 0 - Disabled , 1 - Enabled")
     private Boolean status;
+
+    @Schema(description = "Soft Delete Flag")
+    @TableLogic
+    private Integer isDelete;
 
     @Schema(description = "Remark")
     private String remark;
@@ -68,9 +71,11 @@ public class TbArticleEntity extends Model<TbArticleEntity> {
 
     public static final String ID = "id";
 
-    public static final String IS_DELETE = "is_delete";
+    public static final String ARTICLE_TYPE = "article_type";
 
     public static final String STATUS = "status";
+
+    public static final String IS_DELETE = "is_delete";
 
     public static final String REMARK = "remark";
 

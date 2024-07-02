@@ -18,6 +18,14 @@ import java.util.List;
 @Schema(description = "修改文章请求参数")
 public class ArticleUpdateVo extends BaseParameterVo {
 
+    @Schema(description = "Article Type", required = true)
+    @NotNull
+    private Integer articleType;
+
+    @Schema(description = "Language Id", required = true)
+    @NotNull
+    private Integer languageId;
+
     @Schema(description = "文章名称", required = true)
     @NotNull
     private String articleName;
@@ -25,6 +33,9 @@ public class ArticleUpdateVo extends BaseParameterVo {
     @Schema(description = "文章描述", required = true)
     @NotBlank
     private String articleDescription;
+
+    @Schema(description = "自定义信息")
+    private String customs;
 
     @Schema(description = "元标题", required = true)
     @NotBlank

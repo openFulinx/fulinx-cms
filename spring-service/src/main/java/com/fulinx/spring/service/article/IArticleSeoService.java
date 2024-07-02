@@ -20,7 +20,7 @@ public interface IArticleSeoService {
      * @return
      * @throws BusinessException
      */
-    Optional<TbArticleSeoEntity> create(Integer articleId, String metaTitle, String metaDescription) throws BusinessException;
+    Optional<TbArticleSeoEntity> create(Integer articleId, Integer languageId, String metaTitle, String metaDescription) throws BusinessException;
 
     /**
      * Remove ArticleSeo Seo
@@ -40,8 +40,7 @@ public interface IArticleSeoService {
      * @return
      * @throws BusinessException
      */
-    boolean update(Integer articleId, String metaTitle, String metaDescription) throws BusinessException;
-
+    boolean update(Integer articleId, Integer languageId, String metaTitle, String metaDescription) throws BusinessException;
 
 
 }

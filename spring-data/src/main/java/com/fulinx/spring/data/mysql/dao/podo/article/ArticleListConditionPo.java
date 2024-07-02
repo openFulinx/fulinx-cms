@@ -20,7 +20,7 @@ public class ArticleListConditionPo implements Serializable {
     @Serial
     private static final long serialVersionUID = -467672439017601372L;
 
-    @Schema(description = "Article ID")
+    @Schema(description = "Article Id")
     private Integer articleId;
 
     @Schema(description = "Article Name")
@@ -28,6 +28,9 @@ public class ArticleListConditionPo implements Serializable {
 
     @Schema(description = "Category ID")
     private Integer categoryId;
+
+    @Schema(description = "status")
+    private Boolean status;
 
     @Schema(description = "Soft Delete Flag")
     @TableLogic

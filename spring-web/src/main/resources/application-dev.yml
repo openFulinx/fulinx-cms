@@ -76,7 +76,7 @@ spring:
   # DataSource Configuration for connecting to MySQL Database
   datasource:
     url: >
-      jdbc:mysql://localhost:3306/fulinx-cms?useUnicode=true
+      jdbc:mysql://localhost:3307/fulinx_cms?useUnicode=true
       &characterEncoding=UTF-8
       &zeroDateTimeBehavior=convertToNull
       &autoReconnect=true
@@ -84,7 +84,7 @@ spring:
       &useSSL=false
       &serverTimezone=Asia/Shanghai&allowPublicKeyRetrieval=true
     username: root
-    password: root
+    password: COREsoft1133
     driver-class-name: com.mysql.cj.jdbc.Driver
     hikari:
       maximum-pool-size: 10

@@ -50,7 +50,7 @@ public class IArticleSeoServiceImpl implements IArticleSeoService {
      */
     @Override
     @Transactional(rollbackFor = {Exception.class})
-    public Optional<TbArticleSeoEntity> create(Integer articleId, String metaTitle,  String metaDescription) throws BusinessException {
+    public Optional<TbArticleSeoEntity> create(Integer articleId, Integer languageId, String metaTitle, String metaDescription) throws BusinessException {
         // 检查文章是否存在
         iArticleService.lockById(articleId).orElseThrow(() -> {
             log.debug("新增文章SEO失败，失败原因，文章不存在，articleId = {}", articleId);
@@ -58,6 +58,7 @@ public class IArticleSeoServiceImpl implements IArticleSeoService {
         });
 
         TbArticleSeoEntity tbArticleSeoEntity = new TbArticleSeoEntity();
+        tbArticleSeoEntity.setLanguageId(languageId);
         tbArticleSeoEntity.setArticleId(articleId);
         tbArticleSeoEntity.setMetaTitle(metaTitle);
         tbArticleSeoEntity.setMetaDescription(metaDescription);
@@ -93,13 +94,13 @@ public class IArticleSeoServiceImpl implements IArticleSeoService {
      */
     @Override
     @Transactional(rollbackFor = {Exception.class})
-    public boolean update(Integer articleSeoId, String metaTitle,  String metaDescription) throws BusinessException {
+    public boolean update(Integer articleSeoId, Integer languageId, String metaTitle, String metaDescription) throws BusinessException {
         // 检查文章是否存在
         TbArticleSeoEntity tbArticleSeoEntity = this.lockById(articleSeoId).orElseThrow(() -> {
             log.debug("新增文章SEO失败，失败原因，文章SEO不存在，articleSeoId = {}", articleSeoId);
             return new BusinessException(ErrorMessageEnum.ARTICLE_NOT_EXISTS.getMessage(), ErrorMessageEnum.ARTICLE_NOT_EXISTS.getIndex());
         });
-
+        tbArticleSeoEntity.setLanguageId(languageId);
         tbArticleSeoEntity.setMetaTitle(metaTitle);
         tbArticleSeoEntity.setMetaDescription(metaDescription);
         return tbArticleSeoEntityService.updateById(tbArticleSeoEntity);
