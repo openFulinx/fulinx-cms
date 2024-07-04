@@ -61,6 +61,7 @@ public class IArticleDetailServiceImpl implements IArticleDetailService {
         tbArticleDetailEntity.setArticleId(articleId);
         tbArticleDetailEntity.setArticleName(articleName);
         tbArticleDetailEntity.setArticleDescription(description);
+        tbArticleDetailEntity.setCustoms(customs);
         boolean isOk = tbArticleDetailEntityService.save(tbArticleDetailEntity);
         return Optional.ofNullable(isOk ? tbArticleDetailEntity : null);
     }
@@ -113,6 +114,7 @@ public class IArticleDetailServiceImpl implements IArticleDetailService {
         tbArticleDetailEntity.setLanguageId(languageId);
         tbArticleDetailEntity.setArticleName(articleName);
         tbArticleDetailEntity.setArticleDescription(description);
+        tbArticleDetailEntity.setCustoms(customs);
         return tbArticleDetailEntityService.updateById(tbArticleDetailEntity);
     }
 }

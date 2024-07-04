@@ -31,7 +31,7 @@ public interface IArticleService {
 
     Boolean remove(List<Integer> ids) throws BusinessException;
 
-    TbArticleEntity update(Integer articleType,Integer id, Integer languageId, String articleName, String articleDescription,String customs, String metaTitle, String metaDescription, List<Integer> fileIds, List<Integer> deletedArticleFileIds, List<Integer> categoryIds, List<Integer> deletedCategoryIds, List<String> tags, List<Integer> deletedTagIds, Boolean status) throws BusinessException;
+    TbArticleEntity update(Integer id, Integer articleType, Integer languageId, String articleName, String articleDescription,String customs, String metaTitle, String metaDescription, List<Integer> fileIds, List<Integer> deletedArticleFileIds, List<Integer> categoryIds, List<Integer> deletedCategoryIds, List<String> tags, List<Integer> deletedTagIds, Boolean status) throws BusinessException;
 
 
     /**

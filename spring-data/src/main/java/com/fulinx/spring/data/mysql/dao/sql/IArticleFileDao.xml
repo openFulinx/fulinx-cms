@@ -34,14 +34,14 @@
     </resultMap>
 
     <select id="list" resultMap="ListResultMap">
-        SELECT * FROM tb_article_file
+        SELECT * FROM tb_article_file_relation
         WHERE
         1 = 1
         <if test="articleId != null">
-            AND tb_article_file.article_id = #{articleId}
+            AND tb_article_file_relation.article_id = #{articleId}
         </if>
         <if test="fileId != null">
-            AND tb_article_file.file_id = #{fileId}
+            AND tb_article_file_relation.file_id = #{fileId}
         </if>
         <choose>
             <when test="isDelete == null">
@@ -57,8 +57,8 @@
 
 
     <select id="lockById" resultMap="BaseResultMap">
-        SELECT tb_article_file.*
-        FROM tb_article_file
+        SELECT tb_article_file_relation.*
+        FROM tb_article_file_relation
         WHERE id = #{id}
           AND is_delete = 0 FOR UPDATE
     </select>

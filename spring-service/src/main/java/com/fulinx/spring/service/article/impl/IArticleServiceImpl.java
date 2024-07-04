@@ -12,6 +12,7 @@ import com.fulinx.spring.data.mysql.dao.mapper.IArticleDao;
 import com.fulinx.spring.data.mysql.dao.podo.article.ArticleListConditionPo;
 import com.fulinx.spring.data.mysql.dao.podo.article.ArticleListResultDo;
 import com.fulinx.spring.data.mysql.entity.*;
+import com.fulinx.spring.data.mysql.enums.ArticleTypeEnum;
 import com.fulinx.spring.data.mysql.enums.SimpleStatusEnum;
 import com.fulinx.spring.data.mysql.service.*;
 import com.fulinx.spring.service.article.*;
@@ -122,7 +123,7 @@ public class IArticleServiceImpl implements IArticleService {
             });
         }
 
-        if (categoryIds.size() > 0) {
+        if (!categoryIds.isEmpty()) {
             for (Integer categoryId : categoryIds) {
                 // 检查分类是否存在
                 iCategoryService.lockById(categoryId).orElseThrow(() -> {
@@ -132,7 +133,7 @@ public class IArticleServiceImpl implements IArticleService {
             }
         }
 
-        if (!SimpleStatusEnum.contains(status == true ? 1 : 0)) {
+        if (!SimpleStatusEnum.contains(status ? 1 : 0)) {
             log.debug("新增文章失败，失败原因，状态不存在，status = {}", status);
             throw new BusinessException(ErrorMessageEnum.ARTICLE_STATUS_NOT_EXISTS.getMessage(), ErrorMessageEnum.ARTICLE_STATUS_NOT_EXISTS.getIndex());
         }
@@ -147,12 +148,12 @@ public class IArticleServiceImpl implements IArticleService {
             for (Integer fileId : fileIds) {
                 iArticleFileService.create(tbArticleEntity.getId(), fileId);
             }
-            if (categoryIds.size() > 0) {
+            if (!categoryIds.isEmpty()) {
                 for (Integer categoryId : categoryIds) {
                     iArticleCategoryService.create(tbArticleEntity.getId(), categoryId);
                 }
             }
-            if (tags.size() > 0) {
+            if (!tags.isEmpty()) {
                 for (String tag : tags) {
                     iArticleTagService.create(tbArticleEntity.getId(), tag);
                 }
@@ -210,7 +211,7 @@ public class IArticleServiceImpl implements IArticleService {
      */
     @Override
     @Transactional(rollbackFor = {Exception.class})
-    public TbArticleEntity update(Integer articleType,Integer id, Integer languageId, String articleName, String articleDescription, String customs, String metaTitle, String metaDescription, List<Integer> fileIds, List<Integer> deletedFileIds, List<Integer> categoryIds, List<Integer> deletedCategoryIds, List<String> tags, List<Integer> deletedTagIds, Boolean status) throws BusinessException {
+    public TbArticleEntity update(Integer id, Integer articleType, Integer languageId, String articleName, String articleDescription, String customs, String metaTitle, String metaDescription, List<Integer> fileIds, List<Integer> deletedFileIds, List<Integer> categoryIds, List<Integer> deletedCategoryIds, List<String> tags, List<Integer> deletedTagIds, Boolean status) throws BusinessException {
         TbArticleEntity tbArticleEntity = this.lockById(id).orElseThrow(() -> {
             log.warn("更新文章失败，文章不存在，id = {}", id);
             return new BusinessException(ErrorMessageEnum.ARTICLE_NOT_EXISTS.getMessage(), ErrorMessageEnum.ARTICLE_NOT_EXISTS.getIndex());
@@ -372,6 +373,10 @@ public class IArticleServiceImpl implements IArticleService {
     public List<ArticleListResultDto> list(ArticleQueryConditionDto articleQueryConditionDto) {
         ArticleListConditionPo articleListConditionPo = MiscUtils.copyProperties(articleQueryConditionDto, ArticleListConditionPo.class);
         List<ArticleListResultDo> list = iArticleDao.list(articleListConditionPo);
+        list.forEach(articleListResultDo -> {
+            Optional<String> messageByIndex = ArticleTypeEnum.getMessageByIndex(articleListResultDo.getArticleType());
+            articleListResultDo.setArticleTypeLabel(messageByIndex.get());
+        });
         return getArticleListResultDtos(list);
     }
 

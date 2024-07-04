@@ -30,6 +30,9 @@ public class ArticleListResultDo implements Serializable {
     @Schema(description = "Article Type")
     private Integer articleType;
 
+    @Schema(description = "Article Type Label")
+    private String articleTypeLabel;
+
     @Schema(description = "Category Id")
     private Integer categoryId;
 

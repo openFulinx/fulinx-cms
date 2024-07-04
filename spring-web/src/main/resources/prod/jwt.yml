@@ -14,6 +14,8 @@ jwt:
     # 刷新token时间（秒）
     refreshTokenExpiration: 64800
     # 需要认证的入口点
-#    authenticationEndpoints:
-#      - /server-side/system/user/**
-#      - /server-side/category/**
+    authenticationEndpoints:
+      - /server-side/system/user/**
+      - /server-side/category/**
+      - /server-side/article/**
+      - /server-side/file/**

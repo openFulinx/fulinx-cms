@@ -12,8 +12,9 @@
 
 # EMBEDDED SERVER CONFIGURATION (ServerProperties)
 server:
-  port: 17010
+  port: 20001
 
+version: v1.2.0.5
 # Default language for the application
 app:
   default:
@@ -59,7 +60,7 @@ spring:
     redis:
       host: 127.0.0.1
       port: 6379
-      password:
+      password: COREsoft1133
       database: 0
       lettuce:
         pool:
@@ -75,7 +76,7 @@ spring:
   # DataSource Configuration for connecting to MySQL Database
   datasource:
     url: >
-      jdbc:mysql://localhost:3306/fulinx_spring_starter?useUnicode=true
+      jdbc:mysql://localhost:3306/fulinx_cms?useUnicode=true
       &characterEncoding=UTF-8
       &zeroDateTimeBehavior=convertToNull
       &autoReconnect=true
@@ -83,7 +84,7 @@ spring:
       &useSSL=false
       &serverTimezone=Asia/Shanghai&allowPublicKeyRetrieval=true
     username: root
-    password: root
+    password: COREsoft1133$%^&*Tb
     driver-class-name: com.mysql.cj.jdbc.Driver
     hikari:
       maximum-pool-size: 10
