@@ -17,7 +17,7 @@ import lombok.experimental.Accessors;
 
 /**
  * <p>
- * Site Table
+ * Theme Table
  * </p>
  *
  * @author fulinx
@@ -26,42 +26,33 @@ import lombok.experimental.Accessors;
 @Getter
 @Setter
 @Accessors(chain = true)
-@TableName("tb_site")
-@Schema(name = "TbSiteEntity", description = "Site Table")
-public class TbSiteEntity extends Model<TbSiteEntity> {
+@TableName("tb_theme")
+@Schema(name = "TbThemeEntity", description = "Theme Table")
+public class TbThemeEntity extends Model<TbThemeEntity> {
 
     private static final long serialVersionUID = 1L;
 
-    @Schema(description = "Site ID")
+    @Schema(description = "Theme ID")
     @TableId(value = "id", type = IdType.AUTO)
     private Integer id;
 
-    @Schema(description = "Theme ID")
-    private Integer themeId;
+    @Schema(description = "Theme Name")
+    private String themeName;
 
-    @Schema(description = "Domain")
-    private String domain;
+    @Schema(description = "Theme Type, 1: open 2: describe 3: custom")
+    private Integer themeType;
 
-    @Schema(description = "Language ID")
-    private Integer languageId;
+    @Schema(description = "Theme Author")
+    private String themeAuthor;
 
-    @Schema(description = "Site Name")
-    private String siteName;
+    @Schema(description = "Theme Version")
+    private String themeVersion;
 
-    @Schema(description = "Meta Title")
-    private String metaTitle;
+    @Schema(description = "Theme Thumb File ID")
+    private Integer themeThumbFileId;
 
-    @Schema(description = "Meta Description")
-    private String metaDescription;
-
-    @Schema(description = "Logo File ID")
-    private Integer logoFileId;
-
-    @Schema(description = "Favicon File ID")
-    private Integer faviconFileId;
-
-    @Schema(description = "Status, 0 - Disabled , 1 - Enabled")
-    private Boolean status;
+    @Schema(description = "Theme Config")
+    private String themeConfig;
 
     @Schema(description = "Soft Delete Flag")
     @TableLogic
@@ -92,23 +83,17 @@ public class TbSiteEntity extends Model<TbSiteEntity> {
 
     public static final String ID = "id";
 
-    public static final String THEME_ID = "theme_id";
+    public static final String THEME_NAME = "theme_name";
 
-    public static final String DOMAIN = "domain";
+    public static final String THEME_TYPE = "theme_type";
 
-    public static final String LANGUAGE_ID = "language_id";
+    public static final String THEME_AUTHOR = "theme_author";
 
-    public static final String SITE_NAME = "site_name";
+    public static final String THEME_VERSION = "theme_version";
 
-    public static final String META_TITLE = "meta_title";
+    public static final String THEME_THUMB_FILE_ID = "theme_thumb_file_id";
 
-    public static final String META_DESCRIPTION = "meta_description";
-
-    public static final String LOGO_FILE_ID = "logo_file_id";
-
-    public static final String FAVICON_FILE_ID = "favicon_file_id";
-
-    public static final String STATUS = "status";
+    public static final String THEME_CONFIG = "theme_config";
 
     public static final String IS_DELETE = "is_delete";
 

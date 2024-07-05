@@ -5,6 +5,7 @@
     <!-- 通用查询映射结果 -->
     <resultMap id="BaseResultMap" type="com.fulinx.spring.data.mysql.entity.TbSiteEntity">
         <id column="id" property="id" />
+        <result column="theme_id" property="themeId" />
         <result column="domain" property="domain" />
         <result column="language_id" property="languageId" />
         <result column="site_name" property="siteName" />
@@ -24,7 +25,7 @@
 
     <!-- 通用查询结果列 -->
     <sql id="Base_Column_List">
-        id, domain, language_id, site_name, meta_title, meta_description, logo_file_id, favicon_file_id, status, is_delete, remark, record_version, record_create_name, record_update_name, record_create_time, record_update_time
+        id, theme_id, domain, language_id, site_name, meta_title, meta_description, logo_file_id, favicon_file_id, status, is_delete, remark, record_version, record_create_name, record_update_name, record_create_time, record_update_time
     </sql>
 
 </mapper>

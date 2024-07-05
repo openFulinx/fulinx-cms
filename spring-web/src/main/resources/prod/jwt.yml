@@ -20,3 +20,4 @@ jwt:
       - /server-side/article/**
       - /server-side/file/**
       - /server-side/site/**
+      - /server-side/theme/**

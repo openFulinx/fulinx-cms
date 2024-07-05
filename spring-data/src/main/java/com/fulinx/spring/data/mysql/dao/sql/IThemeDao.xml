@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+  ~ Copyright (c) Minong Tech. 2023.
+  -->
+
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.fulinx.spring.data.mysql.dao.mapper.IThemeDao">
+
+    <!--通用查询映射结果-->
+    <resultMap id="BaseResultMap" type="com.fulinx.spring.data.mysql.entity.TbThemeEntity">
+        <id column="id" property="id"/>
+        <result column="theme_name" property="themeName" />
+        <result column="theme_type" property="themeType" />
+        <result column="theme_author" property="themeAuthor" />
+        <result column="theme_version" property="themeVersion" />
+        <result column="theme_thumb_file_id" property="themeThumbFileId" />
+        <result column="theme_config" property="themeConfig" />
+        <result column="is_delete" property="isDelete"/>
+        <result column="remark" property="remark"/>
+        <result column="record_version" property="recordVersion"/>
+        <result column="record_create_name" property="recordCreateName"/>
+        <result column="record_update_name" property="recordUpdateName"/>
+        <result column="record_create_time" property="recordCreateTime"/>
+        <result column="record_update_time" property="recordUpdateTime"/>
+    </resultMap>
+
+    <resultMap id="ThemeListResultMap" type="com.fulinx.spring.data.mysql.dao.podo.theme.ThemeListResultDo">
+        <id column="id" property="id"/>
+        <result column="theme_name" property="themeName" />
+        <result column="theme_type" property="themeType" />
+        <result column="theme_author" property="themeAuthor" />
+        <result column="theme_version" property="themeVersion" />
+        <result column="theme_thumb_file_id" property="themeThumbFileId" />
+        <result column="theme_config" property="themeConfig" />
+        <result column="is_delete" property="isDelete"/>
+        <result column="remark" property="remark"/>
+        <result column="record_version" property="recordVersion"/>
+        <result column="record_create_name" property="recordCreateName"/>
+        <result column="record_update_name" property="recordUpdateName"/>
+        <result column="record_create_time" property="recordCreateTime"/>
+        <result column="record_update_time" property="recordUpdateTime"/>
+    </resultMap>
+
+    <select id="list" resultMap="ThemeListResultMap">
+        SELECT tb_theme.*
+        FROM
+        tb_theme
+        WHERE
+        1 = 1
+        <if test="id != null">
+            AND tb_theme.id = ${id}
+        </if>
+        <if test="themeName != null">
+            AND tb_theme.theme_name LIKE CONCAT(#{themeName}, '%')
+        </if>
+        <if test="themeType != null">
+            AND tb_theme.theme_type = #{themeType}
+        </if>
+        <choose>
+            <when test="isDelete == null">
+                AND tb_theme.is_delete = 0
+            </when>
+            <otherwise>
+                AND tb_theme.is_delete = #{isDelete}
+            </otherwise>
+        </choose>
+    </select>
+
+    <select id="lockById" resultMap="BaseResultMap">
+        SELECT tb_theme.*
+        FROM tb_theme
+        WHERE id = #{id}
+          AND is_delete = 0 FOR UPDATE
+    </select>
+
+    <select id="lockByIds" resultMap="BaseResultMap">
+        SELECT
+        tb_theme.*
+        FROM
+        tb_theme
+        WHERE id IN
+        <foreach collection="idList" item="id" separator="," open="(" close=")">
+            #{id}
+        </foreach>
+        AND is_delete = 0 FOR UPDATE
+    </select>
+
+</mapper>
