@@ -26,7 +26,7 @@ class MyBatisPlusGeneratorTests {
      * Items to be configured
      */
     private static String author = "fulinx";
-    private static String databaseName = "fulinx_spring_starter";
+    private static String databaseName = "fulinx_cms";
     private static String dbUsername = "root";
     private static String dbPassword = "root";
     private static String dbUrl = String.format("jdbc:mysql://localhost:3306/%s?useUnicode=true" +
@@ -40,7 +40,7 @@ class MyBatisPlusGeneratorTests {
             "readFromMasterWhenNoSlaves=true", databaseName);
     private static String dataPackage = "com.fulinx.spring.data.mysql";
     private static String dataModuleName = "spring-data";
-    private static String outPutRootPath = "D:\\develop\\study\\fulinx-cms";
+    private static String outPutRootPath = "D:\\develop\\fulinx-cms\\api";
 
     /**
      * Items not to be configured

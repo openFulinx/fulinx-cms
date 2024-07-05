@@ -12,7 +12,7 @@ import org.springframework.stereotype.Service;
  * </p>
  *
  * @author fulinx
- * @since 2024-07-01
+ * @since 2024-07-05
  */
 @Service
 public class TbPermissionEntityServiceImpl extends ServiceImpl<TbPermissionMapper, TbPermissionEntity> implements TbPermissionEntityService {

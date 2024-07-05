@@ -86,6 +86,14 @@ public enum ErrorMessageEnum {
     FILE_NOT_EXISTS(-104003, "error.file.not.exists"),
     FILE_UPLOAD_FAIL(-104004, "error.file.upload.fail"),
 
+
+    /**
+     * Site
+     */
+    SITE_CREATE_FAIL(-105001, "error.site.create.fail"),
+    SITE_UPDATE_FAIL(-105002, "error.site.update.fail"),
+    SITE_NOT_EXISTS(-105003, "error.site.not.exists"),
+
     /**
      * Other
      */

@@ -9,7 +9,7 @@ import com.baomidou.mybatisplus.core.mapper.BaseMapper;
  * </p>
  *
  * @author fulinx
- * @since 2024-07-01
+ * @since 2024-07-05
  */
 public interface TbSystemUserMapper extends BaseMapper<TbSystemUserEntity> {
 

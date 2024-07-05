@@ -19,3 +19,4 @@ jwt:
       - /server-side/category/**
       - /server-side/article/**
       - /server-side/file/**
+      - /server-side/site/**
