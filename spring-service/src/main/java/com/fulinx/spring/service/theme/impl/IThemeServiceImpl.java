@@ -87,7 +87,7 @@ public class IThemeServiceImpl implements IThemeService {
 
     @Override
     @Transactional(rollbackFor = {Exception.class})
-    public boolean update(Integer id, String themeName, Integer themeType, String themeAuthor, String themeVersion, Integer themeThumbFileId, String themeConfig) throws BusinessException {
+    public boolean update(Integer id, String themeName, Integer themeType, String themeAuthor, String themeVersion, Integer themeThumbFileId) throws BusinessException {
         TbThemeEntity tbThemeEntity = this.lockById(id).orElseThrow(() -> {
             log.warn("删除网站失败，网站不存在，id = {}", id);
             return new BusinessException(ErrorMessageEnum.SITE_NOT_EXISTS.getMessage(), ErrorMessageEnum.SITE_NOT_EXISTS.getIndex());
@@ -97,6 +97,16 @@ public class IThemeServiceImpl implements IThemeService {
         tbThemeEntity.setThemeAuthor(themeAuthor);
         tbThemeEntity.setThemeVersion(themeVersion);
         tbThemeEntity.setThemeThumbFileId(themeThumbFileId);
+        return tbThemeEntityService.updateById(tbThemeEntity);
+    }
+
+    @Override
+    @Transactional(rollbackFor = {Exception.class})
+    public boolean updateThemeConfig(Integer id, String themeConfig) throws BusinessException {
+        TbThemeEntity tbThemeEntity = this.lockById(id).orElseThrow(() -> {
+            log.warn("删除网站失败，网站不存在，id = {}", id);
+            return new BusinessException(ErrorMessageEnum.SITE_NOT_EXISTS.getMessage(), ErrorMessageEnum.SITE_NOT_EXISTS.getIndex());
+        });
         tbThemeEntity.setThemeConfig(themeConfig);
         return tbThemeEntityService.updateById(tbThemeEntity);
     }

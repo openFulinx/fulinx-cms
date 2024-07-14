@@ -28,7 +28,9 @@ public interface IThemeService {
     boolean remove(List<Integer> themeIds) throws BusinessException;
 
 
-    boolean update(Integer id,String themeName, Integer themeType, String themeAuthor, String themeVersion, Integer themeThumbFileId, String themeConfig) throws BusinessException;
+    boolean update(Integer id, String themeName, Integer themeType, String themeAuthor, String themeVersion, Integer themeThumbFileId) throws BusinessException;
+
+    boolean updateThemeConfig(Integer id, String themeConfig) throws BusinessException;
 
     /**
      * 锁表查

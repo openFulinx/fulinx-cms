@@ -73,7 +73,21 @@ public class ThemeController extends BaseServerSideController {
     @Operation(summary = "更新主题", method = "PUT")
     @PutMapping("/{id}")
     public ResultVo<Boolean> Update(@PathVariable(value = "id") @Valid @NotNull @Min(1) Integer id, @RequestBody @Valid ThemeUpdateVo themeUpdateVo) throws BusinessException {
-        return ResultVo.build(iThemeService.update(id, themeUpdateVo.getThemeName(), themeUpdateVo.getThemeType(), themeUpdateVo.getThemeAuthor(), themeUpdateVo.getThemeVersion(), themeUpdateVo.getThemeThumbFileId(), themeUpdateVo.getThemeConfig()));
+        return ResultVo.build(iThemeService.update(id, themeUpdateVo.getThemeName(), themeUpdateVo.getThemeType(), themeUpdateVo.getThemeAuthor(), themeUpdateVo.getThemeVersion(), themeUpdateVo.getThemeThumbFileId()));
+    }
+
+    /**
+     * 更新主题设计
+     *
+     * @param id
+     * @param themeConfigUpdateVo
+     * @return
+     * @throws BusinessException
+     */
+    @Operation(summary = "更新主题设置", method = "PUT")
+    @PutMapping("/config/{themeId}")
+    public ResultVo<Boolean> UpdateThemeConfig(@PathVariable(value = "themeId") @Valid @NotNull @Min(1) Integer id, @RequestBody @Valid ThemeConfigUpdateVo themeConfigUpdateVo) throws BusinessException {
+        return ResultVo.build(iThemeService.updateThemeConfig(id, themeConfigUpdateVo.getThemeConfig()));
     }
 
     /**

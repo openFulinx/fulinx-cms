@@ -34,7 +34,4 @@ public class ThemeUpdateVo extends BaseParameterVo {
 
     @Schema(description = "Theme Thumb File ID")
     private Integer themeThumbFileId;
-
-    @Schema(description = "Theme Config")
-    private String themeConfig;
 }
