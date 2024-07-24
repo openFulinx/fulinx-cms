@@ -18,6 +18,9 @@ import com.fulinx.spring.service.enums.ErrorMessageEnum;
 import com.fulinx.spring.service.site.ISiteService;
 import com.fulinx.spring.service.site.dto.SiteListResultDto;
 import com.fulinx.spring.service.site.dto.SiteQueryConditionDto;
+import com.fulinx.spring.service.theme.IThemeService;
+import com.fulinx.spring.service.theme.dto.ThemeListResultDto;
+import com.fulinx.spring.service.theme.dto.ThemeQueryConditionDto;
 import com.github.pagehelper.Page;
 import com.github.pagehelper.PageHelper;
 import lombok.extern.slf4j.Slf4j;
@@ -39,20 +42,23 @@ public class ISiteServiceImpl implements ISiteService {
 
     private final ISiteDao iSiteDao;
 
+    private final IThemeService iThemeService;
+
     @Lazy
     @Autowired
-    public ISiteServiceImpl(TbSiteEntityService tbSiteEntityService, TbFileEntityService tbFileEntityService, ISiteDao iSiteDao) {
+    public ISiteServiceImpl(TbSiteEntityService tbSiteEntityService, TbFileEntityService tbFileEntityService, ISiteDao iSiteDao, IThemeService iThemeService) {
         this.tbSiteEntityService = tbSiteEntityService;
         this.tbFileEntityService = tbFileEntityService;
         this.iSiteDao = iSiteDao;
+        this.iThemeService = iThemeService;
     }
 
 
-    
     @Override
     @Transactional(rollbackFor = {Exception.class})
-    public Optional<TbSiteEntity> create(String domain, Integer languageId, String siteName, String metaTitle, String metaDescription, Integer logoFileId, Integer faviconFileId, Boolean status) throws BusinessException {
+    public Optional<TbSiteEntity> create(Integer themeId, String domain, Integer languageId, String siteName, String metaTitle, String metaDescription, Integer logoFileId, Integer faviconFileId, Boolean status) throws BusinessException {
         TbSiteEntity tbSiteEntity = new TbSiteEntity();
+        tbSiteEntity.setThemeId(themeId);
         tbSiteEntity.setDomain(domain);
         tbSiteEntity.setLanguageId(languageId);
         tbSiteEntity.setSiteName(siteName);
@@ -89,11 +95,12 @@ public class ISiteServiceImpl implements ISiteService {
 
     @Override
     @Transactional(rollbackFor = {Exception.class})
-    public boolean update(Integer id, String domain, Integer languageId, String siteName, String metaTitle, String metaDescription, Integer logoFileId, Integer faviconFileId, Boolean status) throws BusinessException {
+    public boolean update(Integer id, Integer themeId, String domain, Integer languageId, String siteName, String metaTitle, String metaDescription, Integer logoFileId, Integer faviconFileId, Boolean status) throws BusinessException {
         TbSiteEntity tbSiteEntity = this.lockById(id).orElseThrow(() -> {
             log.warn("删除网站失败，网站不存在，id = {}", id);
             return new BusinessException(ErrorMessageEnum.SITE_NOT_EXISTS.getMessage(), ErrorMessageEnum.SITE_NOT_EXISTS.getIndex());
         });
+        tbSiteEntity.setThemeId(themeId);
         tbSiteEntity.setDomain(domain);
         tbSiteEntity.setLanguageId(languageId);
         tbSiteEntity.setSiteName(siteName);
@@ -146,6 +153,12 @@ public class ISiteServiceImpl implements ISiteService {
         SiteListConditionPo siteListConditionPo = MiscUtils.copyProperties(siteQueryConditionDto, SiteListConditionPo.class);
         List<SiteListResultDo> siteListResultDoList = iSiteDao.list(siteListConditionPo);
         siteListResultDoList.forEach(siteListResultDo -> {
+            ThemeQueryConditionDto themeQueryConditionDto = new ThemeQueryConditionDto();
+            themeQueryConditionDto.setId(siteListResultDo.getThemeId());
+            List<ThemeListResultDto> themeListResultDtos = iThemeService.list(themeQueryConditionDto);
+            if (themeListResultDtos.size() > 0) {
+                siteListResultDo.setThemeVo(themeListResultDtos.get(0));
+            }
             siteListResultDo.setLogoFileVo(tbFileEntityService.getById(siteListResultDo.getLogoFileId()));
             siteListResultDo.setFaviconFileVo(tbFileEntityService.getById(siteListResultDo.getFaviconFileId()));
         });

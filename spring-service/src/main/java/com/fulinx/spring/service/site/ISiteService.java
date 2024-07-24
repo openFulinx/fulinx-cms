@@ -16,7 +16,7 @@ import java.util.Optional;
 
 public interface ISiteService {
 
-    Optional<TbSiteEntity> create(String domain, Integer languageId, String siteName, String metaTitle, String metaDescription, Integer logoFileId, Integer faviconFileId, Boolean status) throws BusinessException;
+    Optional<TbSiteEntity> create(Integer themeId, String domain, Integer languageId, String siteName, String metaTitle, String metaDescription, Integer logoFileId, Integer faviconFileId, Boolean status) throws BusinessException;
 
     /**
      * 删除文件
@@ -28,7 +28,7 @@ public interface ISiteService {
     boolean remove(List<Integer> siteIds) throws BusinessException;
 
 
-    boolean update(Integer id,String domain, Integer languageId, String siteName, String metaTitle, String metaDescription, Integer logoFileId, Integer faviconFileId, Boolean status) throws BusinessException;
+    boolean update(Integer id, Integer themeId, String domain, Integer languageId, String siteName, String metaTitle, String metaDescription, Integer logoFileId, Integer faviconFileId, Boolean status) throws BusinessException;
 
     /**
      * 锁表查

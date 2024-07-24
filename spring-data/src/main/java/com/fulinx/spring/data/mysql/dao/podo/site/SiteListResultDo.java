@@ -8,6 +8,7 @@ import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableLogic;
 import com.baomidou.mybatisplus.annotation.Version;
+import com.fulinx.spring.data.mysql.dao.podo.theme.ThemeListResultDo;
 import com.fulinx.spring.data.mysql.entity.TbFileEntity;
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Data;
@@ -26,6 +27,12 @@ public class SiteListResultDo implements Serializable {
 
     @Schema(description = "Site ID")
     private Integer id;
+
+    @Schema(description = "Theme ID")
+    private Integer themeId;
+
+    @Schema(description = "Theme Vo")
+    private ThemeListResultDo themeVo;
 
     @Schema(description = "Domain")
     private String domain;

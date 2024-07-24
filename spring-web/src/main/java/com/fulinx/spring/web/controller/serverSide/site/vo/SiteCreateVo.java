@@ -20,6 +20,10 @@ public class SiteCreateVo extends BaseParameterVo {
     @NotBlank
     private String domain;
 
+    @Schema(description = "Theme ID")
+    @NotNull
+    private Integer themeId;
+
     @Schema(description = "Language ID")
     @NotNull
     private Integer languageId;

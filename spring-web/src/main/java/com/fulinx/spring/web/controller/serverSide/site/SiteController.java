@@ -57,7 +57,7 @@ public class SiteController extends BaseServerSideController {
     @Operation(summary = "新增网站", method = "POST")
     @PostMapping
     public ResultVo<Optional<TbSiteEntity>> Create(@RequestBody @Valid SiteCreateVo siteCreateVo) throws BusinessException {
-        return ResultVo.build(iSiteService.create(siteCreateVo.getDomain(), siteCreateVo.getLanguageId(), siteCreateVo.getSiteName(), siteCreateVo.getMetaTitle(), siteCreateVo.getMetaDescription(), siteCreateVo.getLogoFileId(), siteCreateVo.getFaviconFileId(), siteCreateVo.getStatus()));
+        return ResultVo.build(iSiteService.create(siteCreateVo.getThemeId(), siteCreateVo.getDomain(), siteCreateVo.getLanguageId(), siteCreateVo.getSiteName(), siteCreateVo.getMetaTitle(), siteCreateVo.getMetaDescription(), siteCreateVo.getLogoFileId(), siteCreateVo.getFaviconFileId(), siteCreateVo.getStatus()));
     }
 
 
@@ -85,7 +85,7 @@ public class SiteController extends BaseServerSideController {
     @Operation(summary = "更新网站", method = "PUT")
     @PutMapping("/{id}")
     public ResultVo<Boolean> Update(@PathVariable(value = "id") @Valid @NotNull @Min(1) Integer id, @RequestBody @Valid SiteUpdateVo siteUpdateVo) throws BusinessException {
-        return ResultVo.build(iSiteService.update(id, siteUpdateVo.getDomain(), siteUpdateVo.getLanguageId(), siteUpdateVo.getSiteName(), siteUpdateVo.getMetaTitle(), siteUpdateVo.getMetaDescription(), siteUpdateVo.getLogoFileId(), siteUpdateVo.getFaviconFileId(), siteUpdateVo.getStatus()));
+        return ResultVo.build(iSiteService.update(id, siteUpdateVo.getThemeId(), siteUpdateVo.getDomain(), siteUpdateVo.getLanguageId(), siteUpdateVo.getSiteName(), siteUpdateVo.getMetaTitle(), siteUpdateVo.getMetaDescription(), siteUpdateVo.getLogoFileId(), siteUpdateVo.getFaviconFileId(), siteUpdateVo.getStatus()));
     }
 
     /**

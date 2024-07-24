@@ -5,17 +5,17 @@
 
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.fulinx.spring.data.mysql.dao.mapper.ISiteDao">
-
     <!--通用查询映射结果-->
     <resultMap id="BaseResultMap" type="com.fulinx.spring.data.mysql.entity.TbSiteEntity">
-        <result column="domain" property="domain" />
-        <result column="language_id" property="languageId" />
-        <result column="site_name" property="siteName" />
-        <result column="meta_title" property="metaTitle" />
-        <result column="meta_description" property="metaDescription" />
-        <result column="logo_file_id" property="logoFileId" />
-        <result column="favicon_file_id" property="faviconFileId" />
-        <result column="status" property="status" />
+        <result column="theme_id" property="themeId"/>
+        <result column="domain" property="domain"/>
+        <result column="language_id" property="languageId"/>
+        <result column="site_name" property="siteName"/>
+        <result column="meta_title" property="metaTitle"/>
+        <result column="meta_description" property="metaDescription"/>
+        <result column="logo_file_id" property="logoFileId"/>
+        <result column="favicon_file_id" property="faviconFileId"/>
+        <result column="status" property="status"/>
         <result column="is_delete" property="isDelete"/>
         <result column="remark" property="remark"/>
         <result column="record_version" property="recordVersion"/>
@@ -27,14 +27,15 @@
 
     <resultMap id="SiteListResultMap" type="com.fulinx.spring.data.mysql.dao.podo.site.SiteListResultDo">
         <id column="id" property="id"/>
-        <result column="domain" property="domain" />
-        <result column="language_id" property="languageId" />
-        <result column="site_name" property="siteName" />
-        <result column="meta_title" property="metaTitle" />
-        <result column="meta_description" property="metaDescription" />
-        <result column="logo_file_id" property="logoFileId" />
-        <result column="favicon_file_id" property="faviconFileId" />
-        <result column="status" property="status" />
+        <result column="theme_id" property="themeId"/>
+        <result column="domain" property="domain"/>
+        <result column="language_id" property="languageId"/>
+        <result column="site_name" property="siteName"/>
+        <result column="meta_title" property="metaTitle"/>
+        <result column="meta_description" property="metaDescription"/>
+        <result column="logo_file_id" property="logoFileId"/>
+        <result column="favicon_file_id" property="faviconFileId"/>
+        <result column="status" property="status"/>
         <result column="is_delete" property="isDelete"/>
         <result column="remark" property="remark"/>
         <result column="record_version" property="recordVersion"/>
@@ -73,7 +74,8 @@
         SELECT tb_site.*
         FROM tb_site
         WHERE id = #{id}
-          AND is_delete = 0 FOR UPDATE
+          AND is_delete = 0 FOR
+        UPDATE
     </select>
 
     <select id="lockByIds" resultMap="BaseResultMap">
@@ -87,5 +89,4 @@
         </foreach>
         AND is_delete = 0 FOR UPDATE
     </select>
-
 </mapper>
