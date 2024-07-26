@@ -46,6 +46,8 @@ public interface ISiteService {
      */
     Optional<SiteListResultDto> getById(Integer id) throws BusinessException;
 
+    Optional<SiteListResultDto> getByDomain(String domain) throws BusinessException;
+
     /**
      * 查询列表
      *

@@ -142,6 +142,25 @@ public class ISiteServiceImpl implements ISiteService {
         return Optional.ofNullable(siteQueryResultDtoIPage.getTotal() == 0 ? null : siteQueryResultDtoIPage.getRecords().get(0));
     }
 
+    @Override
+    public Optional<SiteListResultDto> getByDomain(String domain) throws BusinessException {
+        TbSiteEntity tbSiteEntity = tbSiteEntityService.lambdaQuery().eq(TbSiteEntity::getDomain, domain).last("limit 1").one();
+        if (tbSiteEntity == null) {
+            log.warn("网站不存在，domain = {}", domain);
+            throw new BusinessException(ErrorMessageEnum.SITE_NOT_EXISTS.getMessage(), ErrorMessageEnum.SITE_NOT_EXISTS.getIndex());
+        }
+        SiteListResultDto siteListResultDto = MiscUtils.copyProperties(tbSiteEntity, SiteListResultDto.class);
+        ThemeQueryConditionDto themeQueryConditionDto = new ThemeQueryConditionDto();
+        themeQueryConditionDto.setId(siteListResultDto.getThemeId());
+        List<ThemeListResultDto> themeListResultDtos = iThemeService.list(themeQueryConditionDto);
+        if (themeListResultDtos.size() > 0) {
+            siteListResultDto.setThemeVo(themeListResultDtos.get(0));
+        }
+        siteListResultDto.setLogoFileVo(tbFileEntityService.getById(siteListResultDto.getLogoFileId()));
+        siteListResultDto.setFaviconFileVo(tbFileEntityService.getById(siteListResultDto.getFaviconFileId()));
+        return Optional.ofNullable(siteListResultDto);
+    }
+
     /**
      * 查询列表
      *

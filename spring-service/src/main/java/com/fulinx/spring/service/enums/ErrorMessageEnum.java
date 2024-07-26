@@ -92,7 +92,7 @@ public enum ErrorMessageEnum {
      */
     SITE_CREATE_FAIL(-105001, "error.site.create.fail"),
     SITE_UPDATE_FAIL(-105002, "error.site.update.fail"),
-    SITE_NOT_EXISTS(-105003, "error.site.not.exists"),
+    SITE_NOT_EXISTS(105003, "error.site.not.exists"),
 
     /**
      * Other
