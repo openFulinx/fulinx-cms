@@ -4,11 +4,17 @@
 
 package com.fulinx.spring.web.controller.share.article;
 
+import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.fulinx.spring.core.generic.ResultListVo;
 import com.fulinx.spring.core.generic.ResultVo;
 import com.fulinx.spring.core.spring.exception.BusinessException;
+import com.fulinx.spring.core.utils.MiscUtils;
 import com.fulinx.spring.data.mysql.enums.ArticleTypeEnum;
 import com.fulinx.spring.data.mysql.enums.LanguageEnum;
+import com.fulinx.spring.service.article.IArticleService;
+import com.fulinx.spring.service.article.dto.ArticleListResultDto;
+import com.fulinx.spring.service.article.dto.ArticleQueryConditionDto;
+import com.fulinx.spring.web.controller.serverSide.article.vo.ArticlePaginationParameterVo;
 import com.fulinx.spring.web.controller.share.article.vo.ShareArticleTypeListVo;
 import com.fulinx.spring.web.controller.share.language.vo.ShareLanguageListVo;
 import com.fulinx.spring.web.framework.base.BaseController;
@@ -32,6 +38,12 @@ import java.util.Map;
 @RequestMapping("/share/public/article")
 public class ShareArticleController extends BaseController {
 
+    private final IArticleService iArticleService;
+
+    public ShareArticleController(IArticleService iArticleService) {
+        this.iArticleService = iArticleService;
+    }
+
     /**
      * 列表-不带分页
      *
@@ -43,5 +55,20 @@ public class ShareArticleController extends BaseController {
     public ResultVo<ResultListVo<?>> ListArticleType(@RequestBody(required = false) @Valid ShareArticleTypeListVo shareArticleTypeListVo) throws BusinessException {
         List<Map<String, Object>> articleTypeList = ArticleTypeEnum.getLanguageInfoList(shareArticleTypeListVo.getArticleTypeCode());
         return ResultVo.build(ResultListVo.build(articleTypeList, articleTypeList.size()));
+    }
+
+    /**
+     * 全部作品列表-带分页
+     *
+     * @param articlePaginationParameterVo
+     * @return
+     * @throws BusinessException
+     */
+    @Operation(summary = "全部文章列表", method = "POST")
+    @PostMapping("/pagination")
+    public ResultVo<ResultListVo<ArticleListResultDto>> Pagination(@RequestBody @Valid ArticlePaginationParameterVo articlePaginationParameterVo) throws BusinessException {
+        ArticleQueryConditionDto articleQueryConditionDto = MiscUtils.copyProperties(articlePaginationParameterVo, ArticleQueryConditionDto.class);
+        IPage<ArticleListResultDto> articleListResultDoIPage = iArticleService.page(articleQueryConditionDto, articlePaginationParameterVo.getPageNumber(), articlePaginationParameterVo.getPageSize());
+        return ResultVo.build(ResultListVo.build(articleListResultDoIPage.getRecords(), articleListResultDoIPage.getTotal()));
     }
 }

@@ -14,9 +14,6 @@ import lombok.EqualsAndHashCode;
 @Schema(description = "分类分页查询参数")
 public class ArticlePaginationParameterVo extends BasePaginationParameterVo {
 
-    @Schema(description = "用户ID")
-    private Integer userId;
-
     @Schema(description = "Article Id")
     private Integer articleId;
 

@@ -54,6 +54,7 @@
         <if test="status != null">
             AND tb_article.status = #{status}
         </if>
+        AND tb_article_category_relation.is_delete = 0
         <choose>
             <when test="isDelete == null">
                 AND tb_article.is_delete = 0
@@ -62,6 +63,14 @@
                 AND tb_article.is_delete = #{isDelete}
             </otherwise>
         </choose>
+        GROUP BY
+        tb_article.id,
+        tb_article_detail.article_name,
+        tb_article_detail.article_description,
+        tb_article_detail.customs,
+        tb_article_detail.language_id,
+        tb_article_seo.meta_title,
+        tb_article_seo.meta_description
         ORDER BY tb_article.id desc
     </select>
 
